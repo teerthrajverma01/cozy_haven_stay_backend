@@ -1,1 +1,6 @@
-module.exports.userLogout = () => {};
+module.exports.userLogout = () => {
+  try {
+  } catch (error) {
+    console.log(error);
+  }
+};
