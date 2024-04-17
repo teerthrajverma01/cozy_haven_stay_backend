@@ -9,6 +9,7 @@ module.exports.getAllUser = async () => {
     return dataValuesArray;
   } catch (error) {
     console.log(error);
+    return "FAILURE";
   }
 };
 

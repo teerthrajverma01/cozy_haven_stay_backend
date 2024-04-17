@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../config/dbconfig");
+const models = require("./index");
 
 const HotelOwnerDetail = db.define(
   "hotel_owner_detail",
@@ -39,5 +40,6 @@ const HotelOwnerDetail = db.define(
     timestamps: false,
   }
 );
+HotelOwnerDetail.hasOne(models.hotelDetailModel);
 
 module.exports = HotelOwnerDetail;

@@ -1,19 +1,20 @@
 const db = require("../../config/dbconfig");
+const models = require("../../models/index");
 
 // add new room_detail
 // 1-> hotelownerdashboard addnew room ->hotelowner adds new room
 module.exports.addNewRoom = async (data) => {
-  let queryAddNewRoom = `INSERT INTO room_detail (room_size,max_people_accomodate, base_fare,ac_non_ac, hotel_id) VALUES (?,?,?,?,?)`;
   try {
-    // insert into hotel_detail
-    let [resultSetHeader] = await db.query(queryAddNewRoom, [
-      data.room_size,
-      data.max_people_accomodate,
-      data.base_fare,
-      data.ac_non_ac,
-      data.hotel_id,
-    ]);
-    if (resultSetHeader.affectedRows == 1) {
+    // Insert into room_detail table using Sequelize
+    const newRoom = await models.roomDetailModel.create({
+      room_size: data.room_size,
+      bed_size: data.bed_size,
+      max_people_accomodate: data.max_people_accomodate,
+      base_fare: data.base_fare,
+      ac_non_ac: data.ac_non_ac,
+      hotel_id: data.hotel_id,
+    });
+    if (newRoom.dataValues) {
       return "SUCCESS";
     } else {
       throw new Error("Error while inserting record in room_detail");
@@ -27,15 +28,27 @@ module.exports.addNewRoom = async (data) => {
 // update exiting room_detail by id
 // 1->hotelownerdashboard update room->  hotelowner updates room by id
 module.exports.updateExistingRoom = async (data) => {
-  let queryUpdateRoomDetailById = `UPDATE room_detail SET room_size=?, max_people_accomodate=?, base_fare=?, ac_non_ac=? WHERE room_id=?`;
   try {
-    let [resultSetHeader] = await db.query(queryUpdateRoomDetailById, [
-      data.room_size,
-      data.max_people_accomodate,
-      data.base_fare,
-      data.ac_non_ac,
-      data.room_id,
-    ]);
+    const [updatedRows] = await models.roomDetailModel.update(
+      {
+        room_size: data.room_size,
+        bed_size: data.bed_size,
+        max_people_accomodate: data.max_people_accomodate,
+        base_fare: data.base_fare,
+        ac_non_ac: data.ac_non_ac,
+      },
+      {
+        where: {
+          room_id: data.room_id,
+        },
+      }
+    );
+
+    if (updatedRows == 1) {
+      return "SUCCESS";
+    } else {
+      throw new Error("Error while updating record in room_detail");
+    }
   } catch (error) {
     console.log(error);
     return "FAILURE";
@@ -45,13 +58,17 @@ module.exports.updateExistingRoom = async (data) => {
 // delete room_detail by id
 // 1->hotelownerdashboard delete room-> hotelowner deletes existing room by id
 module.exports.deleteExistingRoom = async (id) => {
-  let queryDeleteExistingRoom = `DELETE FROM room_detail WHERE room_id = ?`;
   try {
-    let [resultSetHeader] = await db.query(queryDeleteExistingRoom, [id]);
-    if (resultSetHeader.affectedRows == 1) {
+    const deletedRows = await models.roomDetailModel.destroy({
+      where: {
+        room_id: id,
+      },
+    });
+
+    if (deletedRows > 0) {
       return "SUCCESS";
     } else {
-      throw new Error("Error while updating record in hotel_detail");
+      throw new Error("Error while deleting record from room_detail");
     }
   } catch (error) {
     console.log(error);

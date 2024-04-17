@@ -1,40 +1,42 @@
 const db = require("../../config/dbconfig");
+const models = require("../../models/index");
 
 // get all hotelowner
 // 1->admin dashborad ->hotel/owners subsection
 module.exports.getAllHotelOwner = async () => {
-  let queryGetAllHotelOwner = "SELECT * FROM hotel_owner_detail";
-  let [allHotelOwner] = await db.query(queryGetAllHotelOwner);
-
-  return allHotelOwner;
+  try {
+    const result = await models.hotelOwnerDetailModel.findAll();
+    const dataValuesArray = result.map((instance) => instance.dataValues);
+    return dataValuesArray;
+  } catch (error) {
+    console.log(error);
+    return "FAILURE";
+  }
 };
 
 // get hotelowner by id
 // 1-> hotelowner dashboard -> owner profile
 module.exports.getHotelOwnerById = async (id) => {
-  let queryGetHotelOwnerById = `SELECT * FROM hotel_owner_detail WHERE owner_id = ?`;
-  let [hotelOwner] = await db.query(queryGetHotelOwnerById, [id]);
-  return hotelOwner;
+  try {
+    const hotel_owner_detail = await models.hotelOwnerDetailModel.findOne({
+      where: { owner_id: id },
+    });
+    if (!hotel_owner_detail) {
+      throw new Error("Could not fetch hotel_owner_detail by owner_id");
+    }
+    return hotel_owner_detail.dataValues;
+  } catch (error) {
+    console.log(error);
+    return "FALIURE";
+  }
 };
 
 // add new hotelowner
 // 1-> hotelowner signup
 module.exports.addNewHotelOwner = async (data) => {
-  let queryAddHotelOwner = `INSERT INTO hotel_owner_detail (owner_name, password, email, gender, contact_no, address) VALUES (?, ?, ?, ?, ?, ?)`;
   try {
-    let [resultSetHeader] = await db.query(queryAddHotelOwner, [
-      data.owner_name,
-      data.password,
-      data.email,
-      data.gender,
-      data.contact_no,
-      data.address,
-    ]);
-    if (resultSetHeader.affectedRows == 1) {
-      return "SUCCESS";
-    } else {
-      throw new Error("Error while inserting record in hotel_owner_detail");
-    }
+    let result = await models.hotelOwnerDetailModel.create(data);
+    return result.dataValues;
   } catch (error) {
     console.log(error);
     return "FAILURE";
@@ -44,14 +46,11 @@ module.exports.addNewHotelOwner = async (data) => {
 // delete hotelowner by id
 // 1-> admin dashboard -> admin want to delete hotelowner
 module.exports.deleteHotelOwnerById = async (id) => {
-  let querydeleteHotelOwnerById = `DELETE FROM hotel_owner_detail WHERE owner_id = ?`;
   try {
-    let [resultSetHeader] = await db.query(querydeleteHotelOwnerById, [id]);
-    if (resultSetHeader.affectedRows == 1) {
-      return "SUCCESS";
-    } else {
-      throw new Error("Error while deleting record from hotel_owner_detail");
-    }
+    const result = models.hotelOwnerDetailModel.destroy({
+      where: { user_id: id },
+    });
+    return result; // noofitems OR 0
   } catch (error) {
     console.log(error);
     return "FAILURE";
@@ -61,23 +60,22 @@ module.exports.deleteHotelOwnerById = async (id) => {
 // update hotel owner
 // 1-> hotelowner dashboard -> owner wants to update owner_detail
 module.exports.updateHotelOwner = async (data) => {
-  let queryUpdateHotelOwner = `UPDATE hotel_owner_detail SET owner_name = ?, password= ?, email= ?, gender= ?, contact_no= ?, address= ? WHERE owner_id = ?`;
-
   try {
-    let [resultSetHeader] = await db.query(queryUpdateHotelOwner, [
-      data.owner_name,
-      data.password,
-      data.email,
-      data.gender,
-      data.contact_no,
-      data.address,
-      data.owner_id,
-    ]);
-    if (resultSetHeader.affectedRows == 1) {
-      return "SUCCESS";
-    } else {
-      throw new Error("Error while updating record in hotel_owner_detail");
-    }
+    const result = await models.hotelOwnerDetailModel.update(
+      {
+        owner_name: data.owner_name,
+        password: data.password,
+        gender: data.gender,
+        contact_no: data.contact_no,
+        address: data.address,
+      },
+      {
+        where: {
+          owner_id: data.owner_id,
+        },
+      }
+    );
+    return result; //[index]
   } catch (error) {
     console.log(error);
     return "FAILURE";

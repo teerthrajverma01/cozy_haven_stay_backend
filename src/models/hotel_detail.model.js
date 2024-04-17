@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../config/dbconfig");
+const models = require("./index");
 
 const HotelDetail = db.define(
   "hotel_detail",
@@ -36,5 +37,9 @@ const HotelDetail = db.define(
     timestamps: false,
   }
 );
+
+HotelDetail.belongsTo(models.hotelOwnerDetailModel);
+HotelDetail.hasOne(models.hotelAmenityModel);
+HotelDetail.hasMany(models.roomDetailModel);
 
 module.exports = HotelDetail;
