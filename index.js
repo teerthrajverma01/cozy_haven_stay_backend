@@ -3,13 +3,13 @@ const {
   getHotelOwnerById,
   getAllHotelOwner,
   deleteHotelOwnerById,
-} = require("./src/services/hotel_owner_detail.service");
+} = require("./src/services/hotel/hotel_owner_detail.service");
 const {
   addNewUser,
   getUserById,
   getAllUser,
   deleteUserById,
-} = require("./src/services/user_detail.service");
+} = require("./src/services/user/user_detail.service");
 
 const addNewHotelOwnerFun = async () => {
   const result = await addNewHotelOwner({
@@ -45,12 +45,12 @@ const deleteHotelOwnerByIdFun = async (id) => {
 // ***************************************************
 const addNewUserFun = async () => {
   const result = await addNewUser({
-    owner_name: "testname",
-    password: "testpassword",
-    email: "testemail",
+    user_name: "testname2",
+    password: "testpassword2",
+    email: "testemail2",
     gender: "MALE",
-    contact_no: "testcontactno",
-    address: "testaddress",
+    contact_no: "testcontactno2",
+    address: "testaddress2",
   });
   console.log(result);
 };
@@ -70,7 +70,7 @@ const deleteUserByIdFun = async (id) => {
   console.log(result);
 };
 
-// addNewUserFun();
+addNewUserFun();
 // getUserByIdFun(1);
 // getAllUserFun();
 // deleteUserByIdFun(1);

@@ -1,43 +1,40 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../config/dbconfig");
 
-const UserDetail = db.define(
-  "user_detail",
+const HotelDetail = db.define(
+  "hotel_detail",
   {
-    user_id: {
+    hotel_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    user_name: {
+    hotel_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    password: {
+    location: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-    },
-    gender: {
-      type: DataTypes.ENUM("MALE", "FEMALE", "OTHER"),
-    },
-    contact_no: {
-      type: DataTypes.STRING,
-      unique: true,
     },
     address: {
       type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    owner_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "hotel_owner_detail",
+        key: "owner_id",
+      },
     },
   },
   {
     freezeTableName: true,
-    tableName: "user_detail",
+    tableName: "hotel_detail",
     timestamps: false,
   }
 );
 
-module.exports = UserDetail;
+module.exports = HotelDetail;

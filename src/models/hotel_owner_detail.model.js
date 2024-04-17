@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../config/dbconfig");
 
-const UserDetail = db.define(
-  "user_detail",
+const HotelOwnerDetail = db.define(
+  "hotel_owner_detail",
   {
     user_id: {
       type: DataTypes.INTEGER,
@@ -35,9 +35,9 @@ const UserDetail = db.define(
   },
   {
     freezeTableName: true,
-    tableName: "user_detail",
+    tableName: "hotel_owner_detail",
     timestamps: false,
   }
 );
 
-module.exports = UserDetail;
+module.exports = HotelOwnerDetail;
