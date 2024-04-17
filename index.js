@@ -9,6 +9,7 @@ const {
   getUserById,
   getAllUser,
   deleteUserById,
+  updateUser,
 } = require("./src/services/user/user_detail.service");
 
 const addNewHotelOwnerFun = async () => {
@@ -54,9 +55,8 @@ const addNewUserFun = async () => {
   });
   console.log(result);
 };
-
 const getUserByIdFun = async (id) => {
-  const [result] = await getUserById(id);
+  const result = await getUserById(id);
   console.log(result);
 };
 const getAllUserFun = async () => {
@@ -69,8 +69,22 @@ const deleteUserByIdFun = async (id) => {
   const result = await deleteUserById(id);
   console.log(result);
 };
+const updateUserFun = async () => {
+  const result = await updateUser({
+    user_name: "testname1",
+    password: "testpassword1",
+    gender: "MALE",
+    contact_no: "testcontactno1",
+    address: "testaddress1",
+    user_id: 1,
+  });
+  console.log(result);
+};
 
-addNewUserFun();
-// getUserByIdFun(1);
+// addNewUserFun();
+// getUserByIdFun(2);
 // getAllUserFun();
+
 // deleteUserByIdFun(1);
+
+// updateUserFun();
