@@ -4,7 +4,6 @@ const models = require("../../models/index");
 // 1->admin dashboard -> admin profile
 module.exports.getAdminById = async (id) => {
   try {
-    // Find admin by admin_id using Sequelize
     const result = await models.adminModel.findOne({
       where: {
         admin_id: id,

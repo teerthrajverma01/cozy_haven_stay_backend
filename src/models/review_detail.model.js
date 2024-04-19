@@ -1,0 +1,42 @@
+const { Sequelize, DataTypes } = require("sequelize");
+const db = require("../config/dbconfig");
+const models = require("./index");
+
+const ReviewDetail = db.define(
+  "review_detail",
+  {
+    review_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    booking_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    review: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    rating: {
+      type: DataTypes.FLOAT(2, 1),
+      allowNull: false,
+    },
+    time_stamp: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    freezeTableName: true,
+    tableName: "review_detail",
+    timestamps: false,
+  }
+);
+
+ReviewDetail.belongsTo(models.Booking_detailModel, {
+  foreignKey: "booking_id",
+  onDelete: "CASCADE",
+});
+
+module.exports = ReviewDetail;

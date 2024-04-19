@@ -16,9 +16,7 @@ module.exports.getAllUser = async () => {
 // get user by id
 // 1->user dashboard -> user profile
 module.exports.getUserById = async (id) => {
-  // let queryGetUserById = `SELECT * FROM user_detail WHERE user_id = ?`;
   try {
-    // let [user_detail] = await db.query(queryGetAllUser, [id]);
     const user_detail = await models.userDetailModel.findOne({
       where: { user_id: id },
     });
