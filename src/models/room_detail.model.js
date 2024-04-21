@@ -46,6 +46,6 @@ const RoomDetail = db.define(
   }
 );
 
-RoomDetail.belongsTo(models.hotelDetailModel, { foreignKey: "hotel_id" });
+// RoomDetail.belongsTo(models.hotelDetailModel, { foreignKey: "hotel_id" });
 
 module.exports = RoomDetail;

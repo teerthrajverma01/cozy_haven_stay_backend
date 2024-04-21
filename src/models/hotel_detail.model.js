@@ -38,8 +38,8 @@ const HotelDetail = db.define(
   }
 );
 
-HotelDetail.belongsTo(models.hotelOwnerDetailModel);
-HotelDetail.hasOne(models.hotelAmenityModel);
-HotelDetail.hasMany(models.roomDetailModel);
+// HotelDetail.belongsTo(models.hotelOwnerDetailModel);
+// HotelDetail.hasOne(models.hotelAmenityModel);
+// HotelDetail.hasMany(models.roomDetailModel);
 
 module.exports = HotelDetail;

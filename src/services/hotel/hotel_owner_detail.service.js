@@ -27,7 +27,7 @@ module.exports.getHotelOwnerById = async (id) => {
     return hotel_owner_detail.dataValues;
   } catch (error) {
     console.log(error);
-    return "FALIURE";
+    return "FAILURE";
   }
 };
 
@@ -48,7 +48,7 @@ module.exports.addNewHotelOwner = async (data) => {
 module.exports.deleteHotelOwnerById = async (id) => {
   try {
     const result = models.hotelOwnerDetailModel.destroy({
-      where: { user_id: id },
+      where: { owner_id: id },
     });
     return result; // noofitems OR 0
   } catch (error) {
@@ -75,7 +75,7 @@ module.exports.updateHotelOwner = async (data) => {
         },
       }
     );
-    return result; //[index]
+    return result; //[noofrowsaffected]
   } catch (error) {
     console.log(error);
     return "FAILURE";

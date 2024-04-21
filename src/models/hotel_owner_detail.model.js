@@ -5,12 +5,12 @@ const models = require("./index");
 const HotelOwnerDetail = db.define(
   "hotel_owner_detail",
   {
-    user_id: {
+    owner_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    user_name: {
+    owner_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -40,6 +40,6 @@ const HotelOwnerDetail = db.define(
     timestamps: false,
   }
 );
-HotelOwnerDetail.hasOne(models.hotelDetailModel);
+// HotelOwnerDetail.hasOne(models.hotelDetailModel);
 
 module.exports = HotelOwnerDetail;

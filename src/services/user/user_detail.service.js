@@ -72,7 +72,7 @@ module.exports.updateUser = async (data) => {
         },
       }
     );
-    return result; //[index]
+    return result; //[noofrowaffected]
   } catch (error) {
     console.log(error);
     return "FAILURE";

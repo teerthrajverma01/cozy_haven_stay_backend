@@ -13,6 +13,10 @@ const ReviewDetail = db.define(
     booking_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: "bookin_detail",
+        key: "owner_id",
+      },
     },
     review: {
       type: DataTypes.TEXT,
@@ -34,9 +38,8 @@ const ReviewDetail = db.define(
   }
 );
 
-ReviewDetail.belongsTo(models.Booking_detailModel, {
-  foreignKey: "booking_id",
-  onDelete: "CASCADE",
-});
+// ReviewDetail.belongsTo(models.Booking_detailModel, {
+//   foreignKey: "booking_id",
+// });
 
 module.exports = ReviewDetail;

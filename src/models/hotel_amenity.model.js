@@ -45,6 +45,6 @@ const HotelAmenity = db.define(
   }
 );
 
-HotelAmenity.belongsTo(models.hotelDetailModel, { foreignKey: "hotel_id" });
+// HotelAmenity.belongsTo(models.hotelDetailModel, { foreignKey: "hotel_id" });
 
 module.exports = HotelAmenity;

@@ -22,7 +22,7 @@ module.exports.getAdminById = async (id) => {
 // 1->admin dashboard -> admin wants to update admin table
 module.exports.updateAdminDetail = async (data) => {
   try {
-    const [updatedRows] = await Admin.update(
+    const [updatedRows] = await models.adminModel.update(
       {
         admin_name: data.admin_name,
         admin_password: data.admin_password,
