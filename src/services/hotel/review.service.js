@@ -6,17 +6,12 @@ const models = require("../../models/index");
 module.exports.addNewReview = async (data) => {
   try {
     // Create a new review record
-    const newReview = await ReviewDetail.create({
+    const result = await models.reviewDetailModel.create({
       booking_id: data.booking_id,
       review: data.review,
       rating: data.rating,
     });
-    if (newReview.dataValues) {
-      return "SUCCESS";
-    } else {
-      throw new Error("Failed to add review");
-    }
-    return newReview;
+    return result.dataValues;
   } catch (error) {
     console.log(error);
     return "FAILURE";
@@ -27,34 +22,38 @@ module.exports.addNewReview = async (data) => {
 // home -> individual hotel page
 module.exports.getAllReviewByHotelId = async (hotelId) => {
   try {
-    const [reviews] = await models.ReviewDetailModel.findAll({
+    const result = await models.reviewDetailModel.findAll({
       include: [
         {
-          model: models.BookingDetailModel,
+          model: models.bookingDetailModel,
           where: { hotel_id: hotelId },
         },
       ],
     });
-    return reviews.dataValues;
+    const dataValuesArray = result.map((instance) => instance.dataValues);
+    return dataValuesArray;
   } catch (error) {
-    throw new Error("Failed to get reviews: " + error.message);
+    console.log(error);
+    return "FAILURE";
   }
 };
 
 // list all reviews of user
 // user dashboard -> reviews for all hotel
-module.exports.getReviewByUserId = async () => {
+module.exports.getAllReviewByUserId = async () => {
   try {
-    const [userReviews] = await models.ReviewDetailModel.findAll({
+    const [result] = await models.reviewDetailModel.findAll({
       include: [
         {
-          model: models.BookingDetailModel,
+          model: models.bookingDetailModel,
           where: { user_id: userId },
         },
       ],
     });
-    return userReviews.dataValues;
+    const dataValuesArray = result.map((instance) => instance.dataValues);
+    return dataValuesArray;
   } catch (error) {
-    throw new Error("Failed to get user reviews: " + error.message);
+    console.log(error);
+    return "FAILURE";
   }
 };

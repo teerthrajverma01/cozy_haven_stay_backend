@@ -20,9 +20,6 @@ module.exports.getUserById = async (id) => {
     const user_detail = await models.userDetailModel.findOne({
       where: { user_id: id },
     });
-    if (!user_detail) {
-      throw new Error("Could not fetch user_detail by user_id");
-    }
     return user_detail.dataValues;
   } catch (error) {
     console.log(error);
@@ -58,7 +55,7 @@ module.exports.deleteUserById = async (id) => {
 // 1-> user dashboard -> user wants to update user_detail
 module.exports.updateUser = async (data) => {
   try {
-    const result = await models.userDetailModel.update(
+    const [result] = await models.userDetailModel.update(
       {
         user_name: data.user_name,
         password: data.password,

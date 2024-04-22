@@ -19,6 +19,7 @@ module.exports.deleteAllBookingDescription = async (booking_id) => {
     let result = await models.bookingDescriptionModel.destroy({
       where: { booking_id: booking_id },
     });
+    return result;
   } catch (error) {
     console.log(error);
     return "FAILURE";

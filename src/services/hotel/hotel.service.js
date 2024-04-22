@@ -23,12 +23,7 @@ module.exports.addNewHotelAmenity = async (data) => {
       fitness_center: data.fitness_center,
       dining: data.dining,
     });
-
-    if (result) {
-      return result.dataValues;
-    } else {
-      throw new Error("Error while inserting record in hotel_amenity");
-    }
+    return result.dataValues;
   } catch (error) {
     console.log(error);
     return "FAILURE";
@@ -39,7 +34,7 @@ module.exports.addNewHotelAmenity = async (data) => {
 // 1-> hotelownerdashboard update hotel detail (ifexist)->hotelowner updates existing hotel
 module.exports.updateHotelDetail = async (data) => {
   try {
-    const [updatedRows] = await models.hotelDetailModel.update(
+    const [result] = await models.hotelDetailModel.update(
       {
         hotel_name: data.hotel_name,
         location: data.location,
@@ -51,11 +46,7 @@ module.exports.updateHotelDetail = async (data) => {
         },
       }
     );
-    if (updatedRows == 1) {
-      return "SUCCESS"; //[index]
-    } else {
-      throw new Error("could not update hotel detail");
-    }
+    return result;
   } catch (error) {
     console.log(error);
     return "FAILURE";
@@ -63,7 +54,7 @@ module.exports.updateHotelDetail = async (data) => {
 };
 module.exports.updateHotelAmenityById = async (data) => {
   try {
-    const [updatedRows] = await models.hotelAmenityModel.update(
+    const [result] = await models.hotelAmenityModel.update(
       {
         parking: data.parking,
         wifi: data.wifi,
@@ -78,12 +69,7 @@ module.exports.updateHotelAmenityById = async (data) => {
         },
       }
     );
-
-    if (updatedRows == 0) {
-      return "SUCCESS";
-    } else {
-      throw new Error("Error while updating record in hotel_amenity");
-    }
+    return result;
   } catch (error) {
     console.log(error);
     return "FAILURE";
@@ -94,15 +80,12 @@ module.exports.updateHotelAmenityById = async (data) => {
 // 1-> hotelowner dashboard hotel detail-> display hotel detail
 module.exports.getHotelDetailById = async (id) => {
   try {
-    const hotelDetail = await models.hotelDetailModel.findOne({
+    const result = await models.hotelDetailModel.findOne({
       where: {
         owner_id: id,
       },
     });
-    if (!hotelDetail.dataValues) {
-      throw new Error("Could not fetch hotel_detail by hotel_owner_id");
-    }
-    return hotelDetail.dataValues;
+    return result.dataValues;
   } catch (error) {
     console.log(error);
     return "FAILURE";
@@ -110,15 +93,13 @@ module.exports.getHotelDetailById = async (id) => {
 };
 module.exports.getHotelAmenityById = async (id) => {
   try {
-    const hotelAmenity = await models.hotelAmenityModel.findOne({
+    const result = await models.hotelAmenityModel.findOne({
       where: {
         hotel_id: id,
       },
     });
-    if (!hotelAmenity.dataValues) {
-      throw new Error("Could not fetch hotel_amenity by hotel_id");
-    }
-    return hotelAmenity.dataValues;
+
+    return result.dataValues;
   } catch (error) {
     console.log(error);
     return "FAILURE";

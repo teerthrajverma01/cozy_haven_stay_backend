@@ -1,6 +1,6 @@
 const assert = require("assert");
-const adminService = require("../src/services/admin/admin_detail.service");
-const models = require("../src/models/index");
+const adminService = require("../../src/services/admin/admin_detail.service");
+const models = require("../../src/models/index");
 
 describe("Admin Service", () => {
   describe("getAdminById testsuite", () => {

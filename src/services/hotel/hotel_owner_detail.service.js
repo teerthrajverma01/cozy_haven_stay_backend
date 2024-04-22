@@ -18,13 +18,11 @@ module.exports.getAllHotelOwner = async () => {
 // 1-> hotelowner dashboard -> owner profile
 module.exports.getHotelOwnerById = async (id) => {
   try {
-    const hotel_owner_detail = await models.hotelOwnerDetailModel.findOne({
+    const result = await models.hotelOwnerDetailModel.findOne({
       where: { owner_id: id },
     });
-    if (!hotel_owner_detail) {
-      throw new Error("Could not fetch hotel_owner_detail by owner_id");
-    }
-    return hotel_owner_detail.dataValues;
+
+    return result.dataValues;
   } catch (error) {
     console.log(error);
     return "FAILURE";
@@ -57,11 +55,11 @@ module.exports.deleteHotelOwnerById = async (id) => {
   }
 };
 
-// update hotel owner
+// update hotel owner by id
 // 1-> hotelowner dashboard -> owner wants to update owner_detail
 module.exports.updateHotelOwner = async (data) => {
   try {
-    const result = await models.hotelOwnerDetailModel.update(
+    const [result] = await models.hotelOwnerDetailModel.update(
       {
         owner_name: data.owner_name,
         password: data.password,

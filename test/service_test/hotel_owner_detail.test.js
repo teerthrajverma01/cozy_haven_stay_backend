@@ -1,6 +1,6 @@
 const assert = require("assert");
-const hotelOwnerService = require("../src/services/hotel/hotel_owner_detail.service");
-const models = require("../src/models/index");
+const hotelOwnerService = require("../../src/services/hotel/hotel_owner_detail.service");
+const models = require("../../src/models/index");
 
 describe("Admin Service", () => {
   describe("getHotelOwnerById testsuite", () => {

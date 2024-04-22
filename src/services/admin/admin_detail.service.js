@@ -9,9 +9,7 @@ module.exports.getAdminById = async (id) => {
         admin_id: id,
       },
     });
-    if (!result.dataValues) {
-      throw new Error(`Admin with given id  not found`);
-    }
+
     return result.dataValues;
   } catch (error) {
     console.error(error);
@@ -22,7 +20,7 @@ module.exports.getAdminById = async (id) => {
 // 1->admin dashboard -> admin wants to update admin table
 module.exports.updateAdminDetail = async (data) => {
   try {
-    const [updatedRows] = await models.adminModel.update(
+    const [result] = await models.adminModel.update(
       {
         admin_name: data.admin_name,
         admin_password: data.admin_password,
@@ -35,11 +33,7 @@ module.exports.updateAdminDetail = async (data) => {
       }
     );
 
-    if (updatedRows == 1) {
-      return "SUCCESS";
-    } else {
-      throw new Error(`Admin with given id not found`);
-    }
+    return result;
   } catch (error) {
     console.error(error);
     return "FAILURE";

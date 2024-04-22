@@ -19,7 +19,7 @@ module.exports.addNewBookingDetail = async (data) => {
 // 2-> booking status to REFUND_CANCELED
 module.exports.updateBookingDetail = async (data) => {
   try {
-    const result = await models.bookingDetailModel.update(
+    const [result] = await models.bookingDetailModel.update(
       {
         booking_status: data.booking_status,
       },
