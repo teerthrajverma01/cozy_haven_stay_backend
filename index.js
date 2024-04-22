@@ -27,6 +27,10 @@ app.use("/api/owner/", ownerRouter);
 const userRouter = require("./src/routes/user.routes");
 app.use("/api/user/", userRouter);
 
+// error middleware
+const errorHandler = require("./src/middlewares/error.middleware");
+app.use(errorHandler);
+
 // post running at 3000
 const backendPort = process.env.PORT || 3000;
 app.listen(backendPort, () => {
