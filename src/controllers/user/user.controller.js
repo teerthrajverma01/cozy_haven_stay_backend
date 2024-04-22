@@ -1,23 +1,26 @@
+const ApiError = require("../../utils/ApiError");
+const AsyncHandler = require("../../utils/asyncHandler");
+
 // register new user
-module.exports.userRegister = (userData) => {
+module.exports.userRegister = AsyncHandler(async (userData) => {
   try {
   } catch (error) {
-    console.log(error);
+    throw new ApiError();
   }
-};
+});
 
 // login existing user
-module.exports.userLogin = () => {
+module.exports.userLogin = AsyncHandler(async () => {
   try {
   } catch (error) {
-    console.log(error);
+    throw new ApiError();
   }
-};
+});
 
 // logout existing user
-module.exports.userLogout = () => {
+module.exports.userLogout = AsyncHandler(async () => {
   try {
   } catch (error) {
-    console.log(error);
+    throw new ApiError();
   }
-};
+});

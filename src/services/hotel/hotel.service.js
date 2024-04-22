@@ -107,8 +107,6 @@ module.exports.getHotelAmenityById = async (id) => {
 };
 
 // ******************************************************
-// delete hotel by id
-// 1->admin dashboard -> admin deletes hotel by id
 
 // get all hotel by hotel_owner
 // 1-> admindashborard -> display all hotels

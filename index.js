@@ -3,7 +3,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
-//
+// ************************************************************
+
 const app = express();
 app.use(
   cors({
@@ -11,10 +12,13 @@ app.use(
     credentials: true,
   })
 );
+app.use(body);
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: false, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
+
+// *************************************************************
 
 //Api Routes
 // admin router
@@ -27,9 +31,13 @@ app.use("/api/owner/", ownerRouter);
 const userRouter = require("./src/routes/user.routes");
 app.use("/api/user/", userRouter);
 
+// ***************************************************************
+
 // error middleware
 const errorHandler = require("./src/middlewares/error.middleware");
 app.use(errorHandler);
+
+// **************************************************************
 
 // post running at 3000
 const backendPort = process.env.PORT || 3000;

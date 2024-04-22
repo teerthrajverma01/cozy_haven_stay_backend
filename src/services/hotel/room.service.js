@@ -26,6 +26,24 @@ module.exports.getAllRoomsByHotelId = async (hotelId) => {
     return "FAILURE";
   }
 };
+// get all room by hotelowner id
+module.exports.getAllRoomsByHotelOwnerId = async (hotelId) => {
+  try {
+    const result = await RoomDetail.findAll({
+      include: [
+        {
+          model: models.hotelDetailModel,
+          where: { owner_id: ownerId },
+        },
+      ],
+    });
+    const dataValuesArray = result.map((instance) => instance.dataValues);
+    return dataValuesArray;
+  } catch (error) {
+    console.log(error);
+    return "FAILURE";
+  }
+};
 
 // add new room_detail
 // 1-> hotelownerdashboard addnew room ->hotelowner adds new room

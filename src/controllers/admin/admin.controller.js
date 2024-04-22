@@ -1,12 +1,17 @@
-module.exports.adminLogin = () => {
+const ApiError = require("../../utils/ApiError");
+const AsyncHandler = require("../../utils/asyncHandler");
+
+// admin login
+module.exports.adminLogin = AsyncHandler(async (req, res) => {
   try {
   } catch (error) {
-    console.log(error);
+    throw new ApiError();
   }
-};
-module.exports.adminLogout = () => {
+});
+// admin logout
+module.exports.adminLogout = AsyncHandler(async (req, res) => {
   try {
   } catch (error) {
-    console.log(error);
+    throw new ApiError();
   }
-};
+});

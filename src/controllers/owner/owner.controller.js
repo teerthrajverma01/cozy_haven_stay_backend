@@ -1,23 +1,26 @@
-// register new hotel owner
-module.exports.ownerRegister = (req, res) => {
-  try {
-  } catch (error) {
-    console.log(error);
-  }
-};
+const ApiError = require("../../utils/ApiError");
+const AsyncHandler = require("../../utils/asyncHandler");
 
-// login existing hotelowner
-module.exports.ownerLogin = (req, res) => {
+// register new hotel owner
+module.exports.ownerRegister = AsyncHandler(async (req, res) => {
   try {
   } catch (error) {
-    console.log(error);
+    throw new ApiError();
   }
-};
+});
 
 //  logout existing hotelowner
-module.exports.ownerLogout = (req, res) => {
+module.exports.ownerLogoutLogin = AsyncHandler(async (req, res) => {
   try {
   } catch (error) {
-    console.log(error);
+    throw new ApiError();
   }
-};
+});
+
+// login existing hotelowner
+module.exports.ownerLogout = AsyncHandler(async (req, res) => {
+  try {
+  } catch (error) {
+    throw new ApiError();
+  }
+});
