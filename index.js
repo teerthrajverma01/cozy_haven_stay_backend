@@ -1,90 +1,34 @@
-const {
-  addNewHotelOwner,
-  getHotelOwnerById,
-  getAllHotelOwner,
-  deleteHotelOwnerById,
-} = require("./src/services/hotel/hotel_owner_detail.service");
-const {
-  addNewUser,
-  getUserById,
-  getAllUser,
-  deleteUserById,
-  updateUser,
-} = require("./src/services/user/user_detail.service");
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+require("dotenv").config();
 
-const addNewHotelOwnerFun = async () => {
-  const result = await addNewHotelOwner({
-    owner_name: "testname",
-    password: "testpassword",
-    email: "testemail",
-    gender: "MALE",
-    contact_no: "testcontactno",
-    address: "testaddress",
-  });
-  console.log(result);
-};
+//
+const app = express();
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  })
+);
+app.use(express.json({ limit: "16kb" }));
+app.use(express.urlencoded({ extended: false, limit: "16kb" }));
+app.use(express.static("public"));
+app.use(cookieParser());
 
-const getHotelOwnerByIdFun = async (id) => {
-  const [result] = await getHotelOwnerById(id);
-  console.log(result);
-};
-const getAllHotelOwnerFun = async () => {
-  const result = await getAllHotelOwner();
-  for (let item of result) {
-    console.log(item);
-  }
-};
-const deleteHotelOwnerByIdFun = async (id) => {
-  const result = await deleteHotelOwnerById(id);
-  console.log(result);
-};
-// addNewHotelOwnerFun();
-// getHotelOwnerByIdFun(1);
-// getAllHotelOwnerFun();
-// deleteHotelOwnerByIdFun(1);
+//Api Routes
+// admin router
+const adminRouter = require("./src/routes/admin.routes");
+app.use("/api/admin/", adminRouter);
+// hotelowner router
+const ownerRouter = require("./src/routes/owner.routes");
+app.use("/api/owner/", ownerRouter);
+// user router
+const userRouter = require("./src/routes/user.routes");
+app.use("/api/user/", userRouter);
 
-// ***************************************************
-const addNewUserFun = async () => {
-  const result = await addNewUser({
-    user_name: "testname2",
-    password: "testpassword2",
-    email: "testemail2",
-    gender: "MALE",
-    contact_no: "testcontactno2",
-    address: "testaddress2",
-  });
-  console.log(result);
-};
-const getUserByIdFun = async (id) => {
-  const result = await getUserById(id);
-  console.log(result);
-};
-const getAllUserFun = async () => {
-  const result = await getAllUser();
-  for (let item of result) {
-    console.log(item);
-  }
-};
-const deleteUserByIdFun = async (id) => {
-  const result = await deleteUserById(id);
-  console.log(result);
-};
-const updateUserFun = async () => {
-  const result = await updateUser({
-    user_name: "testname1",
-    password: "testpassword1",
-    gender: "MALE",
-    contact_no: "testcontactno1",
-    address: "testaddress1",
-    user_id: 1,
-  });
-  console.log(result);
-};
-
-// addNewUserFun();
-// getUserByIdFun(2);
-// getAllUserFun();
-
-// deleteUserByIdFun(1);
-
-// updateUserFun();
+// post running at 3000
+const backendPort = process.env.PORT || 3000;
+app.listen(backendPort, () => {
+  console.log(`Server is running at http://localhost:${backendPort}`);
+});
