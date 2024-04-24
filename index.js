@@ -12,7 +12,6 @@ app.use(
     credentials: true,
   })
 );
-app.use(body);
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: false, limit: "16kb" }));
 app.use(express.static("public"));
@@ -44,3 +43,5 @@ const backendPort = process.env.PORT || 3000;
 app.listen(backendPort, () => {
   console.log(`Server is running at http://localhost:${backendPort}`);
 });
+
+module.exports = app; //for testing

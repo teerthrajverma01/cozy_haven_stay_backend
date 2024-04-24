@@ -18,9 +18,9 @@ const router = Router();
 //secured routes (jwt verification needed)
 router.route("/login").post(adminLogin);
 router.route("/logout").post(adminLogout);
-router.route("/get-all-user").post(getAllUser);
-router.route("/delete-user/:userid").post(deleteUserById);
-router.route("/get-all-owner").post(getAllOwner);
-router.route("/delete-owner/:ownerid").post(deleteOwnerById);
+router.route("/dashboard/get-all-user").post(getAllUser);
+router.route("/dashboard/delete-user/:userid").delete(deleteUserById);
+router.route("/dashboard/get-all-owner").get(getAllOwner);
+router.route("/dashboard/delete-owner/:ownerid").delete(deleteOwnerById);
 
 module.exports = router;

@@ -48,3 +48,10 @@ module.exports.deleteRoomDetailByRoomId = AsyncHandler(async (id) => {
     throw new ApiError();
   }
 });
+// update room by roomid
+module.exports.updateRoomDetailByRoomId = AsyncHandler(async (id) => {
+  try {
+  } catch (error) {
+    throw new ApiError();
+  }
+});

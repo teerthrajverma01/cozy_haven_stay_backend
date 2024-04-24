@@ -34,6 +34,7 @@ module.exports.getHotelOwnerById = async (id) => {
 module.exports.addNewHotelOwner = async (data) => {
   try {
     let result = await models.hotelOwnerDetailModel.create(data);
+
     return result.dataValues;
   } catch (error) {
     console.log(error);
@@ -48,6 +49,7 @@ module.exports.deleteHotelOwnerById = async (id) => {
     const result = models.hotelOwnerDetailModel.destroy({
       where: { owner_id: id },
     });
+
     return result; // noofitems OR 0
   } catch (error) {
     console.log(error);
