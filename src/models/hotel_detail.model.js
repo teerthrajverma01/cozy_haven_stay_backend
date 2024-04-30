@@ -22,6 +22,31 @@ const HotelDetail = db.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    // hotelamenity
+    parking: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    wifi: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    room_service: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    swimming_pool: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    fitness_center: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    dining: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
     owner_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -39,7 +64,6 @@ const HotelDetail = db.define(
 );
 
 // HotelDetail.belongsTo(models.hotelOwnerDetailModel);
-// HotelDetail.hasOne(models.hotelAmenityModel);
 // HotelDetail.hasMany(models.roomDetailModel);
 
 module.exports = HotelDetail;

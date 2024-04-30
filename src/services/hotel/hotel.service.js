@@ -12,23 +12,6 @@ module.exports.addNewHotel = async (data) => {
     return "FAILURE";
   }
 };
-module.exports.addNewHotelAmenity = async (data) => {
-  try {
-    const result = await models.hotelAmenityModel.create({
-      hotel_id: data.hotel_id,
-      parking: data.parking,
-      wifi: data.wifi,
-      room_service: data.room_service,
-      swimming_pool: data.swimming_pool,
-      fitness_center: data.fitness_center,
-      dining: data.dining,
-    });
-    return result.dataValues;
-  } catch (error) {
-    console.log(error);
-    return "FAILURE";
-  }
-};
 
 // update exsiting hotel_detail by id
 // 1-> hotelownerdashboard update hotel detail (ifexist)->hotelowner updates existing hotel
@@ -39,23 +22,6 @@ module.exports.updateHotelDetail = async (data) => {
         hotel_name: data.hotel_name,
         location: data.location,
         address: data.address,
-      },
-      {
-        where: {
-          hotel_id: data.hotel_id,
-        },
-      }
-    );
-    return result;
-  } catch (error) {
-    console.log(error);
-    return "FAILURE";
-  }
-};
-module.exports.updateHotelAmenityById = async (data) => {
-  try {
-    const [result] = await models.hotelAmenityModel.update(
-      {
         parking: data.parking,
         wifi: data.wifi,
         room_service: data.room_service,
@@ -85,20 +51,6 @@ module.exports.getHotelDetailById = async (id) => {
         owner_id: id,
       },
     });
-    return result.dataValues;
-  } catch (error) {
-    console.log(error);
-    return "FAILURE";
-  }
-};
-module.exports.getHotelAmenityById = async (id) => {
-  try {
-    const result = await models.hotelAmenityModel.findOne({
-      where: {
-        hotel_id: id,
-      },
-    });
-
     return result.dataValues;
   } catch (error) {
     console.log(error);

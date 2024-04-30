@@ -25,46 +25,17 @@ module.exports.updateOwnerDetail = AsyncHandler(async (req, res) => {
 // add new hotel_detail
 module.exports.addNewHotelDetail = AsyncHandler(async (req, res) => {
   try {
-    let {
-      hotel_name,
-      location,
-      address,
-      owner_id,
-      parking,
-      wifi,
-      room_service,
-      swimming_pool,
-      fitness_center,
-      dining,
-    } = req.body;
+    let data = req.body;
 
     // adding hotel data to hotel_detail table
-    let hotelData = { hotel_name, location, address, owner_id };
-    let hotelInsertResult = await hotelService.addNewHotel(hotelData);
+    let hotelInsertResult = await hotelService.addNewHotel(data);
     if (hotelInsertResult == "FAILURE") {
       throw new ApiError(500, "Couldnot add new hotel in database ");
     }
-    // adding hotel data to hotel_amenity_detail table
-    let hotelAmenityData = {
-      hotel_id: hotelInsertResult.hotel_id,
-      parking,
-      wifi,
-      room_service,
-      swimming_pool,
-      fitness_center,
-      dining,
-    };
-    let hotelAmenityInsertResult = await hotelService.addNewHotelAmenity(
-      hotelAmenityData
-    );
-    if (hotelAmenityInsertResult == "FAILURE") {
-      throw new ApiError(500, "Couldnot add new hotelamenity in database ");
-    }
 
-    let result = { ...hotelInsertResult, ...hotelAmenityInsertResult };
     return res
       .status(200)
-      .json(new ApiResponse(200, result, "new hotel+amenity added "));
+      .json(new ApiResponse(200, hotelInsertResult, "new hotel added "));
   } catch (error) {
     throw error;
   }
@@ -73,46 +44,20 @@ module.exports.addNewHotelDetail = AsyncHandler(async (req, res) => {
 // update exsiting hotel_detail by id
 module.exports.updateHotelDetail = AsyncHandler(async (req, res) => {
   try {
-    let {
-      hotel_name,
-      location,
-      address,
-      owner_id,
-      parking,
-      wifi,
-      room_service,
-      swimming_pool,
-      fitness_center,
-      dining,
-    } = req.body;
+    let data = req.body;
 
     // adding hotel data to hotel_detail table
-    let hotelData = { hotel_name, location, address, owner_id };
-    let hotelUpdateResult = await hotelService.updateHotelDetail(hotelData);
+
+    let hotelUpdateResult = await hotelService.updateHotelDetail(data);
     if (hotelUpdateResult == "FAILURE") {
       throw new ApiError(500, "Couldnot add update hotel in database ");
     }
-    // adding hotel data to hotel_amenity_detail table
-    let hotelAmenityData = {
-      hotel_id: hotelInsertResult.hotel_id,
-      parking,
-      wifi,
-      room_service,
-      swimming_pool,
-      fitness_center,
-      dining,
-    };
-    let hotelAmenityUpdateResult = await hotelService.updateHotelAmenityById(
-      hotelAmenityData
-    );
-    if (hotelAmenityUpdateResult == "FAILURE") {
-      throw new ApiError(500, "Couldnot update hotelamenity in database ");
-    }
 
-    let result = { ...hotelUpdateResult, ...hotelAmenityUpdateResult };
     return res
       .status(200)
-      .json(new ApiResponse(200, result, "new hotel+amenity added "));
+      .json(
+        new ApiResponse(200, hotelUpdateResult, "new hotel+amenity added ")
+      );
   } catch (error) {
     throw error;
   }
@@ -122,24 +67,16 @@ module.exports.updateHotelDetail = AsyncHandler(async (req, res) => {
 module.exports.getHotelDetailByOwnerId = AsyncHandler(async (id) => {
   try {
     let { ownerid } = req.params;
-    let hotelData = await hotelOwnerService.getHotelDetailById(data);
+    let hotelData = await hotelOwnerService.getHotelDetailById(ownerid);
     if (hotelData == "FAILURE") {
       throw new ApiError(500, "Couldnot fetch hotel detail from database ");
     }
-    let hotel_id = hotelData.hotel_id;
-    let hotelAmenityData = await hotelOwnerService.getHotelAmenityById(
-      hotel_id
-    );
-    if (hotelAmenityData == "FAILURE") {
-      throw new ApiError(
-        500,
-        "Couldnot fetch hotelamenity detail from database "
-      );
-    }
-    let result = { ...hotelData, ...hotelAmenityData };
+
     return res
       .status(200)
-      .json(new ApiResponse(200, result, "fetched hotel detail successfully "));
+      .json(
+        new ApiResponse(200, hotelData, "fetched hotel detail successfully ")
+      );
   } catch (error) {
     throw error;
   }
