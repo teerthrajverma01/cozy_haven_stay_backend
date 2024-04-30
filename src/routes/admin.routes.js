@@ -16,10 +16,10 @@ const { adminValidator } = require("../middlewares/validation.middleware.js");
 const router = Router();
 
 // unsecured routes
-router.route("/login").post(adminValidator, adminLogin);
+router.route("/login").post(adminLogin);
 //secured routes (jwt verification needed)
-router.route("/logout").post(adminLogout);
-router.route("/dashboard/get-all-user").post(verifyJWT, getAllUser);
+router.route("/logout").post(verifyJWT, adminLogout);
+router.route("/dashboard/get-all-user").get(verifyJWT, getAllUser);
 router
   .route("/dashboard/delete-user/:userid")
   .delete(verifyJWT, deleteUserById);
