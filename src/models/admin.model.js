@@ -40,6 +40,7 @@ const Admin = db.define(
 
 module.exports = Admin;
 
+// **************************************************************************
 // DROP TABLE IF EXISTS admin;
 
 // CREATE TABLE IF NOT EXISTS admin (
@@ -50,3 +51,6 @@ module.exports = Admin;
 //     admin_phoneno VARCHAR(255) NOT NULL UNIQUE,
 //     refresh_token VARCHAR(255) UNIQUE
 // 	);
+
+// INSERT INTO admin (admin_name, admin_email, admin_password, admin_phoneno) VALUES ("testadmin1", "testadmin1@gmail.com", "testadminpassword1", "testadminphoneno1");
+// INSERT INTO admin (admin_name, admin_email, admin_password, admin_phoneno) VALUES ("testadmin2", "testadmin2@gmail.com", "testadminpassword2", "testadminphoneno2");

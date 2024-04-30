@@ -60,3 +60,6 @@ module.exports = HotelOwnerDetail;
 //     address text,
 // 	refresh_token VARCHAR(255) UNIQUE
 //     ) ;
+
+// INSERT INTO hotel_owner_detail (owner_name, email, password, contact_no) VALUES ("testowner1", "testowner1@gmail.com", "testownerpassword1", "testownerphoneno1");
+// INSERT INTO hotel_owner_detail (owner_name, email, password, contact_no) VALUES ("testowner2", "testowner2@gmail.com", "testownerpassword2", "testownerphoneno2");

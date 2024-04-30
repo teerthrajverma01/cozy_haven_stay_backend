@@ -58,3 +58,6 @@ module.exports = UserDetail;
 //     address text ,
 // 	refresh_token VARCHAR(255) UNIQUE
 //     ) ;
+
+// INSERT INTO user_detail (user_name, email, password, contact_no) VALUES ("testuser1", "testuser1@gmail.com", "testuserpassword1", "testuserphoneno1");
+// INSERT INTO hotel_user_detail (user_name, email, password, contact_no) VALUES ("testuser2", "testuser2@gmail.com", "testuserpassword2", "testuserphoneno2");
