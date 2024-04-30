@@ -71,6 +71,7 @@ module.exports.adminLogin = AsyncHandler(async (req, res) => {
 // admin logout
 module.exports.adminLogout = AsyncHandler(async (req, res) => {
   try {
+    console.log("#########START#########");
     let { admin_id } = req.params;
 
     let data = await adminService.getAdminById(admin_id);

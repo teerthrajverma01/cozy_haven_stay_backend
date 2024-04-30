@@ -18,7 +18,7 @@ const router = Router();
 // unsecured routes
 router.route("/login").post(adminLogin);
 //secured routes (jwt verification needed)
-router.route("/logout").post(verifyJWT, adminLogout);
+router.route("/logout/:adminid").post(verifyJWT, adminLogout);
 router.route("/dashboard/get-all-user").get(verifyJWT, getAllUser);
 router
   .route("/dashboard/delete-user/:userid")
