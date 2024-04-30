@@ -25,27 +25,21 @@ const HotelDetail = db.define(
     // hotelamenity
     parking: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
     },
     wifi: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
     },
     room_service: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
     },
     swimming_pool: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
     },
     fitness_center: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
     },
     dining: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
     },
     owner_id: {
       type: DataTypes.INTEGER,
@@ -67,3 +61,20 @@ const HotelDetail = db.define(
 // HotelDetail.hasMany(models.roomDetailModel);
 
 module.exports = HotelDetail;
+
+// DROP TABLE IF EXISTS hotel_detail;
+// CREATE TABLE IF NOT EXISTS hotel_detail (
+// 	hotel_id INT AUTO_INCREMENT PRIMARY KEY,
+//     hotel_name VARCHAR(255) NOT NULL,
+// 	location VARCHAR(255) NOT NULL,
+//     address TEXT NOT NULL,
+//     -- amenities
+//     parking BOOL ,
+//     wifi BOOL,
+//     room_service BOOL,
+//     swimming_pool BOOL,
+//     fitness_center BOOL,
+//     dining BOOL,
+// 	owner_id INT NOT NULL,
+//     CONSTRAINT FK_hd_hod FOREIGN KEY (owner_id) REFERENCES hotel_owner_detail(owner_id)
+//     );
