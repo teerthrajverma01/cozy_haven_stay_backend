@@ -18,10 +18,6 @@ const HotelOwnerDetail = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    refresh_token: {
-      type: DataTypes.STRING,
-      unique: true,
-    },
     email: {
       type: DataTypes.STRING,
       unique: true,
@@ -37,6 +33,10 @@ const HotelOwnerDetail = db.define(
     address: {
       type: DataTypes.TEXT,
     },
+    refresh_token: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
   },
   {
     freezeTableName: true,
@@ -47,3 +47,16 @@ const HotelOwnerDetail = db.define(
 // HotelOwnerDetail.hasOne(models.hotelDetailModel);
 
 module.exports = HotelOwnerDetail;
+
+// DROP TABLE IF EXISTS hotel_owner_detail;
+
+// CREATE TABLE IF NOT EXISTS hotel_owner_detail (
+// 	owner_id INT AUTO_INCREMENT PRIMARY KEY,
+//     owner_name VARCHAR(255) NOT NULL,
+//     password VARCHAR(255) NOT NULL,
+//     email VARCHAR(255) NOT NULL UNIQUE,
+//     gender ENUM("MALE" ,"FEMALE", "OTHER" ) CHECK (gender IN ("MALE" ,"FEMALE", "OTHER" )),
+//     contact_no VARCHAR(20) UNIQUE,
+//     address text,
+// 	refresh_token VARCHAR(255) UNIQUE
+//     ) ;

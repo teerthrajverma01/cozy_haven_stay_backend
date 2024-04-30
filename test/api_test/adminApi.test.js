@@ -11,6 +11,6 @@ describe("AdminApi", () => {
   // get all owner
   // delete owner by ownerid
   // delete user by userid
-  // login admin [REMAINING]
-  // logout admin [REMAINING]
+  // login admin
+  // logout admin
 });

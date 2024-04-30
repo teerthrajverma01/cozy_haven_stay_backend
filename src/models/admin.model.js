@@ -22,13 +22,13 @@ const Admin = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    refresh_token: {
-      type: DataTypes.STRING,
-      unique: true,
-    },
     admin_phoneno: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    refresh_token: {
+      type: DataTypes.STRING,
+      unique: true,
     },
   },
   {
@@ -39,3 +39,14 @@ const Admin = db.define(
 );
 
 module.exports = Admin;
+
+// DROP TABLE IF EXISTS admin;
+
+// CREATE TABLE IF NOT EXISTS admin (
+// 	admin_id INT PRIMARY KEY AUTO_INCREMENT,
+//     admin_name VARCHAR(255) NOT NULL ,
+//     admin_email VARCHAR(255) NOT NULL UNIQUE ,
+//     admin_password VARCHAR(255) NOT NULL ,
+//     admin_phoneno VARCHAR(255) NOT NULL UNIQUE,
+//     refresh_token VARCHAR(255) UNIQUE
+// 	);
