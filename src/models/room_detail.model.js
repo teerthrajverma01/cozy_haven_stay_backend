@@ -54,3 +54,10 @@ module.exports = RoomDetail;
 //     base_fare INT,
 //     ac_non_ac BOOL,
 //     hotel_id INT NOT NULL ,
+
+// INSERT INTO room_detail (room_size, bed_size, max_people_accomodate, base_fare, ac_non_ac, hotel_id)VALUES (99,"SINGLE_BED", 1,499,TRUE,1);
+// INSERT INTO room_detail (room_size, bed_size, max_people_accomodate, base_fare, ac_non_ac, hotel_id)VALUES (199,"DOUBLE_BED", 2,999,FALSE,1);
+// INSERT INTO room_detail (room_size, bed_size, max_people_accomodate, base_fare, ac_non_ac, hotel_id)VALUES (299,"KINGSIZE_BED", 3,1499,TRUE,1);
+// INSERT INTO room_detail (room_size, bed_size, max_people_accomodate, base_fare, ac_non_ac, hotel_id)VALUES (99,"SINGLE_BED", 1,499,FALSE,2);
+// INSERT INTO room_detail (room_size, bed_size, max_people_accomodate, base_fare, ac_non_ac, hotel_id)VALUES (199,"DOUBLE_BED", 2,999,TRUE,2);
+// INSERT INTO room_detail (room_size, bed_size, max_people_accomodate, base_fare, ac_non_ac, hotel_id)VALUES (299,"KINGSIZE_BED", 3,1499,FALSE,2);
