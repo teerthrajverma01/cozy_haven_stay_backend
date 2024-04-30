@@ -10,13 +10,13 @@ const generateAccessToken = async (data) => {
   }
   return jwt.sign(
     {
-      owner_id: data.id,
+      id: data.id,
       email: data.email,
-      owner_name: data.name,
+      name: data.name,
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRY || "7d",
     }
   );
 };
@@ -28,11 +28,11 @@ const generateRefreshToken = async (data) => {
 
   return jwt.sign(
     {
-      owner_id: data.id,
+      id: data.id,
     },
     process.env.REFRESH_TOKEN_SECRET,
     {
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRY || "30d",
     }
   );
 };

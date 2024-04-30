@@ -3,12 +3,14 @@ const AsyncHandler = require("../../utils/asyncHandler");
 const ApiResponse = require("../../utils/ApiResponse");
 const { isPasswordCorrect } = require("../../utils/bcryptMethods");
 const { generateAccessAndRefreshTokens } = require("../../utils/generateToken");
+require("dotenv").config();
 
 const adminService = require("../../services/admin/admin_detail.service");
 
 // admin login
 module.exports.adminLogin = AsyncHandler(async (req, res) => {
   try {
+    console.log("*******BEGIN********");
     // req body -> data
     const data = req.body;
     //find the user
@@ -35,6 +37,8 @@ module.exports.adminLogin = AsyncHandler(async (req, res) => {
 
     // update access token in admin_detail
     admin.refresh_token = refreshToken;
+
+    // console.log("######admin", admin);
     const updateAdminDetail = await adminService.updateAdminDetail(admin);
     if (updateAdminDetail === "FAILURE") {
       throw new ApiError(500, "Couldnot update admin refreshtoken ");
@@ -42,28 +46,17 @@ module.exports.adminLogin = AsyncHandler(async (req, res) => {
 
     //send cookie
     const options = {
-      expires: new Date(
-        Date.now() + process.env.ACCESS_TOKEN_EXPIRY * 24 * 60 * 60 * 1000
-      ),
       httpOnly: true,
       secure: true,
     };
     delete admin.admin_password;
     delete admin.refresh_token;
-    delete admin.access_token;
-
+    console.log("*******END********");
     return res
       .status(200)
       .cookie("userRole", "admin", options)
       .cookie("accessToken", accessToken, options)
-      .cookie("refreshToken", refreshToken, options)
-      .json(
-        new ApiResponse(
-          200,
-          { ...admin, accessToken, refreshToken },
-          "admin logged In Successfully"
-        )
-      );
+      .json(new ApiResponse(200, admin, "admin logged In Successfully"));
   } catch (error) {
     throw error;
   }
@@ -72,23 +65,27 @@ module.exports.adminLogin = AsyncHandler(async (req, res) => {
 module.exports.adminLogout = AsyncHandler(async (req, res) => {
   try {
     console.log("#########START#########");
-    let { admin_id } = req.params;
+    let { adminid } = req.params;
 
-    let data = await adminService.getAdminById(admin_id);
-    if (data == "FAILURE") {
+    let data = await adminService.getAdminById(adminid);
+    if (data === "FAILURE") {
       throw new ApiError(401, "admin_id invalid");
     }
-    data.refresh_token = "";
 
     let updatedResult = await adminService.updateAdminDetail(data);
-    if (updatedResult == "FAILURE") {
+    if (updatedResult === "FAILURE") {
       throw new ApiError(500, "cannot remove admin refreshtoken");
     }
+    console.log("############################");
+
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
     return res
       .status(200)
       .clearCookie("userRole", options)
       .clearCookie("accessToken", options)
-      .clearCookie("refreshToken", options)
       .json(new ApiResponse(200, {}, "admin logged Out"));
   } catch (error) {
     throw error;

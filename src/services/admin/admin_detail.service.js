@@ -12,7 +12,7 @@ module.exports.getAdminById = async (id) => {
 
     return result.dataValues;
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return "FAILURE";
   }
 };
@@ -29,7 +29,7 @@ module.exports.getAdminByEmail = async (email_id) => {
 
     return result.dataValues;
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return "FAILURE";
   }
 };
@@ -40,7 +40,7 @@ module.exports.updateAdminDetail = async (data) => {
     const [result] = await models.adminModel.update(
       {
         admin_name: data.admin_name,
-        admin_password: data.admin_password,
+
         admin_phoneno: data.admin_phoneno,
         refresh_token: data.refresh_token,
       },
@@ -53,7 +53,7 @@ module.exports.updateAdminDetail = async (data) => {
 
     return result;
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return "FAILURE";
   }
 };
