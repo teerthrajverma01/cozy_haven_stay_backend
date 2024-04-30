@@ -42,6 +42,7 @@ module.exports.updateAdminDetail = async (data) => {
         admin_name: data.admin_name,
         admin_password: data.admin_password,
         admin_phoneno: data.admin_phoneno,
+        refresh_token: data.refresh_token,
       },
       {
         where: {

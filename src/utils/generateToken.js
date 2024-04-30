@@ -1,14 +1,18 @@
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 const hotelOwnerService = require("../services/hotel/hotel_owner_detail.service");
 const userService = require("../services/user/user_detail.service");
 const adminService = require("../services/admin/admin_detail.service");
+require("dotenv").config();
 
-const generateAccessToken = (data) => {
+const generateAccessToken = async (data) => {
+  if (!data || !data.id || !data.email || !data.name) {
+    throw new Error("Invalid data object for generating access token");
+  }
   return jwt.sign(
     {
-      owner_id: data.owner_id,
+      owner_id: data.id,
       email: data.email,
-      owner_name: data.username,
+      owner_name: data.name,
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
@@ -17,10 +21,14 @@ const generateAccessToken = (data) => {
   );
 };
 
-const generateRefreshToken = () => {
+const generateRefreshToken = async (data) => {
+  if (!data || !data.id) {
+    throw new Error("Invalid data object for generating refresh token");
+  }
+
   return jwt.sign(
     {
-      owner_id: data.owner_id,
+      owner_id: data.id,
     },
     process.env.REFRESH_TOKEN_SECRET,
     {
@@ -29,35 +37,54 @@ const generateRefreshToken = () => {
   );
 };
 
-module.exports.generateAccessAndRefereshTokens = async (userRole, id) => {
+module.exports.generateAccessAndRefreshTokens = async (userRole, id) => {
   try {
     let result;
-    if (userRole == "admin") {
-      result = await hotelOwnerService.getHotelOwnerById(id);
-    } else if (userRole == "owner") {
+    let dataForToken;
+    if (userRole === "admin") {
       result = await adminService.getAdminById(id);
-    } else if (userRole == "user") {
+      console.log(result);
+      dataForToken = {
+        id: result.admin_id,
+        email: result.admin_email,
+        name: result.admin_name,
+      };
+    } else if (userRole === "owner") {
+      result = await hotelOwnerService.getHotelOwnerById(id);
+      dataForToken = {
+        id: result.owner_id,
+        email: result.email,
+        name: result.owner_name,
+      };
+    } else if (userRole === "user") {
       result = await userService.getUserById(id);
+      dataForToken = {
+        id: result.user_id,
+        email: result.email,
+        name: result.user_name,
+      };
     }
 
-    const accessToken = generateAccessToken(result);
-    const refreshToken = generateRefreshToken(result);
+    if (result === "FAILURE") {
+      throw new Error(500, `INTERNAL DATABASE ERROR WHILE GETTING ${userRole}`);
+    }
+    console.log(dataForToken);
+    const accessToken = generateAccessToken(dataForToken);
+    const refreshToken = generateRefreshToken(dataForToken);
 
     result.refreshToken = refreshToken;
     let updatedResult;
-    if (userRole == "admin") {
-      updatedResult = await hotelOwnerService.updateHotelOwner(result);
-    } else if (userRole == "owner") {
+    if (userRole === "admin") {
       updatedResult = await adminService.updateAdminDetail(result);
-    } else if (userRole == "user") {
+    } else if (userRole === "owner") {
+      updatedResult = await hotelOwnerService.updateHotelOwner(result);
+    } else if (userRole === "user") {
       updatedResult = await userService.updateUser(result);
     }
 
     return { accessToken, refreshToken };
   } catch (error) {
-    throw new ApiError(
-      500,
-      "Something went wrong while generating referesh and access token"
-    );
+    console.log(error);
+    return "FAILURE";
   }
 };
