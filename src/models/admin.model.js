@@ -22,6 +22,10 @@ const Admin = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    refresh_token: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
     admin_phoneno: {
       type: DataTypes.STRING,
       allowNull: false,

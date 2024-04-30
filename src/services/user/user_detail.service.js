@@ -44,7 +44,7 @@ module.exports.addNewUser = async (data) => {
 module.exports.deleteUserById = async (id) => {
   try {
     const result = models.userDetailModel.destroy({ where: { user_id: id } });
-    return result; // noofitems OR 0
+    return result; // noof affected row
   } catch (error) {
     console.log(error);
     return "FAILURE";
@@ -69,7 +69,7 @@ module.exports.updateUser = async (data) => {
         },
       }
     );
-    return result; //[noofrowaffected]
+    return result; //noofrowaffected
   } catch (error) {
     console.log(error);
     return "FAILURE";

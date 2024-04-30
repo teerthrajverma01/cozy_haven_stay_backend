@@ -16,6 +16,23 @@ module.exports.getAdminById = async (id) => {
     return "FAILURE";
   }
 };
+
+// get admin by email
+// 1->admin login
+module.exports.getAdminByEmail = async (email_id) => {
+  try {
+    const result = await models.adminModel.findOne({
+      where: {
+        admin_email: email_id,
+      },
+    });
+
+    return result.dataValues;
+  } catch (error) {
+    console.error(error);
+    return "FAILURE";
+  }
+};
 // update admin detail
 // 1->admin dashboard -> admin wants to update admin table
 module.exports.updateAdminDetail = async (data) => {

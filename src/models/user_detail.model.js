@@ -17,6 +17,10 @@ const UserDetail = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    refresh_token: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
     email: {
       type: DataTypes.STRING,
       unique: true,

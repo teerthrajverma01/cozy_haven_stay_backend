@@ -28,6 +28,18 @@ module.exports.getHotelOwnerById = async (id) => {
     return "FAILURE";
   }
 };
+module.exports.getHotelOwnerByEmail = async (email) => {
+  try {
+    const result = await models.hotelOwnerDetailModel.findOne({
+      where: { email: email },
+    });
+
+    return result.dataValues;
+  } catch (error) {
+    console.log(error);
+    return "FAILURE";
+  }
+};
 
 // add new hotelowner
 // 1-> hotelowner signup
@@ -75,7 +87,7 @@ module.exports.updateHotelOwner = async (data) => {
         },
       }
     );
-    return result; //[noofrowsaffected]
+    return result; //noofrowsaffected
   } catch (error) {
     console.log(error);
     return "FAILURE";
