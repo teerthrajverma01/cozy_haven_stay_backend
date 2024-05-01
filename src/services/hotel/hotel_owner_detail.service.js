@@ -1,4 +1,3 @@
-const db = require("../../config/dbconfig");
 const models = require("../../models/index");
 
 // get all hotelowner
@@ -76,10 +75,11 @@ module.exports.updateHotelOwner = async (data) => {
     const [result] = await models.hotelOwnerDetailModel.update(
       {
         owner_name: data.owner_name,
-        password: data.password,
+
         gender: data.gender,
         contact_no: data.contact_no,
         address: data.address,
+        refresh_token: data.refresh_token,
       },
       {
         where: {

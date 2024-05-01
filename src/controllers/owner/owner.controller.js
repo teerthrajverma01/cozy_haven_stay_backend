@@ -5,25 +5,26 @@ const {
   encryptPassword,
   isPasswordCorrect,
 } = require("../../utils/bcryptMethods");
-const generateToken = require("../../utils/generateToken");
+const { generateAccessAndRefreshTokens } = require("../../utils/generateToken");
 const hotelOwnerService = require("../../services/hotel/hotel_owner_detail.service");
 
 // register new hotel owner
 module.exports.ownerRegister = AsyncHandler(async (req, res) => {
   try {
+    // console.log("##########START############################");
     let data = req.body;
-
     // check if owner already present or not
     // encrypt the password
-    data.password = encryptPassword(data.password);
+    data.password = await encryptPassword(data.password);
     // create entry in db
     let result = await hotelOwnerService.addNewHotelOwner(data);
     if (result == "FAILURE") {
       throw new ApiError(500, "Couldnot add new hotelowner to database ");
     }
     // remove password and refreshtoken  from response
-    delete result[password];
-    delete result[refresh_token];
+    delete result.password;
+    delete result.refresh_token;
+    // console.log("##########END############################");
     return res
       .status(200)
       .json(new ApiResponse(200, result, "new hotelowner registered"));
@@ -35,43 +36,50 @@ module.exports.ownerRegister = AsyncHandler(async (req, res) => {
 // login existing hotelowner
 module.exports.ownerLogin = AsyncHandler(async (req, res) => {
   try {
-    // req body -> data
-    const data = req.body;
+    // console.log("##########START############################");
+    let data = req.body;
     //find the user
-    const owner = await hotelOwnerService.getHotelOwnerByEmail(data.email);
+    let owner = await hotelOwnerService.getHotelOwnerByEmail(data.email);
+    if (owner === "FAILURE") {
+      throw new ApiError(401, "Invalid owner email");
+    }
     //password check
-    const isPasswordValid = isPasswordCorrect(owner.password);
+    const isPasswordValid = await isPasswordCorrect(
+      data.password,
+      owner.password
+    );
     if (!isPasswordValid) {
       throw new ApiError(401, "Invalid owner credentials");
     }
     //set access and referesh token
-    const { accessToken, refreshToken } =
-      await generateToken.generateAccessAndRefereshTokens(
-        "owner",
-        owner.owner_id
-      );
+    let tokens = await generateAccessAndRefreshTokens("owner", owner.owner_id);
+    if (tokens === "FAILURE") {
+      throw new ApiError(500, "Token error");
+    }
+    let accessToken = await tokens.accessToken;
+    let refreshToken = await tokens.refreshToken;
+
+    // update access token in admin_detail
+    owner.refresh_token = refreshToken;
+    const updateOwnerDetail = await hotelOwnerService.updateHotelOwner(owner);
+    if (updateOwnerDetail === "FAILURE") {
+      throw new ApiError(500, "Couldnot update owner refreshtoken ");
+    }
 
     //send cookie
     const options = {
-      expires: new Date(
-        Date.now() + process.env.ACCESS_TOKEN_EXPIRY * 24 * 60 * 60 * 1000
-      ),
       httpOnly: true,
       secure: true,
     };
-    delete owner[password];
+    delete owner.password;
+    delete owner.refresh_token;
+    // console.log("##########END############################");
+
     return res
       .status(200)
       .cookie("userRole", "owner", options)
       .cookie("accessToken", accessToken, options)
-      .cookie("refreshToken", refreshToken, options)
-      .json(
-        new ApiResponse(
-          200,
-          { ...owner, accessToken, refreshToken },
-          "Owner logged In Successfully"
-        )
-      );
+      .json(new ApiResponse(200, owner, "Owner logged In Successfully"));
   } catch (error) {
     throw error;
   }

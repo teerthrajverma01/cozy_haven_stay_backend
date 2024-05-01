@@ -10,11 +10,10 @@ const adminService = require("../../services/admin/admin_detail.service");
 // admin login
 module.exports.adminLogin = AsyncHandler(async (req, res) => {
   try {
-    console.log("*******BEGIN********");
-    // req body -> data
-    const data = req.body;
+    // console.log("*******START********");
+    let data = req.body;
     //find the user
-    const admin = await adminService.getAdminByEmail(data.admin_email);
+    let admin = await adminService.getAdminByEmail(data.admin_email);
     if (admin === "FAILURE") {
       throw new ApiError(401, "Invalid admin email");
     }
@@ -37,8 +36,6 @@ module.exports.adminLogin = AsyncHandler(async (req, res) => {
 
     // update access token in admin_detail
     admin.refresh_token = refreshToken;
-
-    // console.log("######admin", admin);
     const updateAdminDetail = await adminService.updateAdminDetail(admin);
     if (updateAdminDetail === "FAILURE") {
       throw new ApiError(500, "Couldnot update admin refreshtoken ");
