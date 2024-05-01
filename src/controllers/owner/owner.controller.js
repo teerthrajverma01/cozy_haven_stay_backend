@@ -88,23 +88,29 @@ module.exports.ownerLogin = AsyncHandler(async (req, res) => {
 //  logout existing hotelowner
 module.exports.ownerLogout = AsyncHandler(async (req, res) => {
   try {
-    let { owner_id } = req.params;
+    // console.log("##########START############################");
+    let { ownerid } = req.params;
 
-    let data = await hotelOwnerService.getHotelOwnerById(owner_id);
+    let data = await hotelOwnerService.getHotelOwnerById(ownerid);
     if (data == "FAILURE") {
       throw new ApiError(401, "owner_id invalid");
     }
-    data.refresh_token = "";
 
+    data.refresh_token = "";
     let updatedResult = await hotelOwnerService.updateHotelOwner(data);
     if (updatedResult == "FAILURE") {
       throw new ApiError(500, "cannot remove owner refreshtoken");
     }
+    // console.log("##########END############################");
+
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
     return res
       .status(200)
       .clearCookie("userRole", options)
       .clearCookie("accessToken", options)
-      .clearCookie("refreshToken", options)
       .json(new ApiResponse(200, {}, "owner logged Out"));
   } catch (error) {
     throw error;

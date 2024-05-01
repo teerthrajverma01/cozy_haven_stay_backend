@@ -21,7 +21,7 @@ const router = Router();
 router.route("/register").post(ownerRegister);
 router.route("/login").post(ownerLogin);
 //secured routes (jwt verification needed)
-router.route("/logout/:owner_id").post(verifyJWT, ownerLogout);
+router.route("/logout/:ownerid").post(verifyJWT, ownerLogout);
 router.route("/dashboard/update-owner").put(verifyJWT, updateOwnerDetail);
 router.route("/dashboard/add-new-hotel").post(verifyJWT, addNewHotelDetail);
 router.route("/dashboard/update-hotel").put(verifyJWT, updateHotelDetail);

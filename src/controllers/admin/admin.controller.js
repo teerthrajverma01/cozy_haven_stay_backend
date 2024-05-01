@@ -48,7 +48,7 @@ module.exports.adminLogin = AsyncHandler(async (req, res) => {
     };
     delete admin.admin_password;
     delete admin.refresh_token;
-    console.log("*******END********");
+    // console.log("*******END********");
     return res
       .status(200)
       .cookie("userRole", "admin", options)
@@ -61,7 +61,7 @@ module.exports.adminLogin = AsyncHandler(async (req, res) => {
 // admin logout
 module.exports.adminLogout = AsyncHandler(async (req, res) => {
   try {
-    console.log("#########START#########");
+    // console.log("#########START#########");
     let { adminid } = req.params;
 
     let data = await adminService.getAdminById(adminid);
@@ -69,11 +69,12 @@ module.exports.adminLogout = AsyncHandler(async (req, res) => {
       throw new ApiError(401, "admin_id invalid");
     }
 
+    data.refresh_token = "";
     let updatedResult = await adminService.updateAdminDetail(data);
     if (updatedResult === "FAILURE") {
       throw new ApiError(500, "cannot remove admin refreshtoken");
     }
-    console.log("############################");
+    // console.log("###########END#################");
 
     const options = {
       httpOnly: true,

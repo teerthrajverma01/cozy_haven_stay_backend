@@ -13,29 +13,27 @@ module.exports.verifyJWT = async (req, res, next) => {
       throw new ApiError(401, "Unauthorized request");
     }
     let decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-
     const userRole = req.cookies?.userRole;
     let result;
-    if (userRole == "admin") {
-      result = await adminService.getAdminById(decodedToken?.id);
-    } else if (userRole == "owner") {
-      result = await hotelOwnerService.getHotelOwnerById(decodedToken?.id);
-    } else if (userRole == "user") {
-      result = await userService.getUserById(decodedToken?.id);
+    if (userRole === "admin") {
+      result = await adminService.getAdminById(decodedToken.id);
+    } else if (userRole === "owner") {
+      result = await hotelOwnerService.getHotelOwnerById(decodedToken.id);
+    } else if (userRole === "user") {
+      result = await userService.getUserById(decodedToken.id);
     }
     if (!result) {
       throw new ApiError(401, "Invalid Access Token");
     }
 
-    if (userRole == "admin") {
+    if (userRole === "admin") {
       delete result.admin_password;
-      delete result.admin_refresh_token;
     } else {
       delete result.password;
-      delete result.refresh_token;
     }
+    delete result.refresh_token;
 
-    req.body = { ...result };
+    req.auth = { ...result, role: userRole };
     console.log("###########verifyJWTEND#################");
     next();
   } catch (error) {

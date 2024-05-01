@@ -4,11 +4,12 @@ const {
   adminLogout,
 } = require("../controllers/admin/admin.controller");
 const {
-  getAllOwner,
+  getAdminById,
   getAllUser,
   deleteUserById,
+  getAllOwner,
   deleteOwnerById,
-} = require("..//controllers/admin/adminDashboard.controller.js");
+} = require("../controllers/admin/adminDashboard.controller.js");
 const { verifyJWT } = require("../middlewares/auth.middleware.js");
 
 const { adminValidator } = require("../middlewares/validation.middleware.js");
@@ -19,6 +20,7 @@ const router = Router();
 router.route("/login").post(adminLogin);
 //secured routes (jwt verification needed)
 router.route("/logout/:adminid").post(verifyJWT, adminLogout);
+router.route("/dashboard/getadmin/:adminid").get(verifyJWT, getAdminById);
 router.route("/dashboard/get-all-user").get(verifyJWT, getAllUser);
 router
   .route("/dashboard/delete-user/:userid")

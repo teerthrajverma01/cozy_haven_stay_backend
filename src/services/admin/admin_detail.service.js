@@ -4,13 +4,12 @@ const models = require("../../models/index");
 // 1->admin dashboard -> admin profile
 module.exports.getAdminById = async (id) => {
   try {
-    const result = await models.adminModel.findOne({
-      where: {
-        admin_id: id,
-      },
-    });
+    const result = await models.adminModel.findByPk(id);
 
-    return result.dataValues;
+    if (!result) {
+      throw new Error("admin with given id not found");
+    }
+    return result?.dataValues;
   } catch (error) {
     console.log(error);
     return "FAILURE";
@@ -40,7 +39,6 @@ module.exports.updateAdminDetail = async (data) => {
     const [result] = await models.adminModel.update(
       {
         admin_name: data.admin_name,
-
         admin_phoneno: data.admin_phoneno,
         refresh_token: data.refresh_token,
       },

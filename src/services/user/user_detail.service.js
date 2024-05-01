@@ -1,11 +1,14 @@
-const db = require("../../config/dbconfig");
 const models = require("../../models/index");
 // get all users
 // 1->admin dashborad ->user section
 module.exports.getAllUser = async () => {
   try {
-    const result = await models.userDetailModel.findAll();
-    const dataValuesArray = result.map((instance) => instance.dataValues);
+    // console.log("########SERVICE START###############");
+
+    let result = await models.userDetailModel.findAll();
+
+    let dataValuesArray = result.map((instance) => instance.dataValues);
+    // console.log("########SERVICE END###############");
     return dataValuesArray;
   } catch (error) {
     console.log(error);
