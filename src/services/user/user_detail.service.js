@@ -56,7 +56,7 @@ module.exports.deleteUserById = async (id) => {
 
 // update existing user by id
 // 1-> user dashboard -> user wants to update user_detail
-module.exports.updateUser = async (data) => {
+module.exports.updateUserDetail = async (data) => {
   try {
     const [result] = await models.userDetailModel.update(
       {
@@ -65,6 +65,25 @@ module.exports.updateUser = async (data) => {
         gender: data.gender,
         contact_no: data.contact_no,
         address: data.address,
+      },
+      {
+        where: {
+          user_id: data.user_id,
+        },
+      }
+    );
+    return result; //noofrowaffected
+  } catch (error) {
+    console.log(error);
+    return "FAILURE";
+  }
+};
+// update refresh token
+module.exports.updateUserDetailRefreshToken = async (data) => {
+  try {
+    const [result] = await models.userDetailModel.update(
+      {
+        refresh_token: data.refresh_token,
       },
       {
         where: {

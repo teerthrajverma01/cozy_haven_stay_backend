@@ -2,9 +2,9 @@ const db = require("../../config/dbconfig");
 const models = require("../../models/index");
 
 // get room by room id
-module.exports.getRoomById = async () => {
+module.exports.getRoomById = async (roomId) => {
   try {
-    const result = await RoomDetail.findByPk(roomId);
+    const result = await models.roomDetailModel.findByPk(roomId);
     return result.dataValues;
   } catch (error) {
     console.log(error);
@@ -14,7 +14,7 @@ module.exports.getRoomById = async () => {
 // get all room by hotel id
 module.exports.getAllRoomsByHotelId = async (hotelId) => {
   try {
-    const result = await RoomDetail.findAll({
+    const result = await models.roomDetailModel.findAll({
       where: {
         hotel_id: hotelId,
       },
@@ -29,7 +29,7 @@ module.exports.getAllRoomsByHotelId = async (hotelId) => {
 // get all room by hotelowner id
 module.exports.getAllRoomsByHotelOwnerId = async (hotelId) => {
   try {
-    const result = await RoomDetail.findAll({
+    const result = await models.roomDetailModel.findAll({
       include: [
         {
           model: models.hotelDetailModel,

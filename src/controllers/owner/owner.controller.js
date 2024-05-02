@@ -1,6 +1,8 @@
 const ApiError = require("../../utils/ApiError");
 const AsyncHandler = require("../../utils/asyncHandler");
 const ApiResponse = require("../../utils/ApiResponse");
+const ownerLogger = require("../../../logger/ownerLogger/index");
+
 const {
   encryptPassword,
   isPasswordCorrect,
@@ -19,11 +21,18 @@ module.exports.ownerRegister = AsyncHandler(async (req, res) => {
     // create entry in db
     let result = await hotelOwnerService.addNewHotelOwner(data);
     if (result == "FAILURE") {
+      ownerLogger.error(
+        `ownerRegister -> $OWNER_EMAIL=[${data.email}] : Couldnot add new hotelowner to database `
+      );
       throw new ApiError(500, "Couldnot add new hotelowner to database ");
     }
     // remove password and refreshtoken  from response
     delete result.password;
     delete result.refresh_token;
+
+    ownerLogger.info(
+      `ownerRegister -> $OWNER_EMAIL=[${data.email}] : new hotelowner registered`
+    );
     // console.log("##########END############################");
     return res
       .status(200)
@@ -41,6 +50,9 @@ module.exports.ownerLogin = AsyncHandler(async (req, res) => {
     //find the user
     let owner = await hotelOwnerService.getHotelOwnerByEmail(data.email);
     if (owner === "FAILURE") {
+      ownerLogger.error(
+        `ownerLogin -> $OWNER_EMAIL=[${data.email}] : Invalid owner email`
+      );
       throw new ApiError(401, "Invalid owner email");
     }
     //password check
@@ -49,11 +61,17 @@ module.exports.ownerLogin = AsyncHandler(async (req, res) => {
       owner.password
     );
     if (!isPasswordValid) {
+      ownerLogger.error(
+        `ownerLogin -> $OWNER_EMAIL=[${data.email}] : Invalid owner credentials`
+      );
       throw new ApiError(401, "Invalid owner credentials");
     }
     //set access and referesh token
     let tokens = await generateAccessAndRefreshTokens("owner", owner.owner_id);
     if (tokens === "FAILURE") {
+      ownerLogger.error(
+        `ownerLogin -> $OWNER_EMAIL=[${data.email}] : Token error`
+      );
       throw new ApiError(500, "Token error");
     }
     let accessToken = await tokens.accessToken;
@@ -61,8 +79,12 @@ module.exports.ownerLogin = AsyncHandler(async (req, res) => {
 
     // update access token in admin_detail
     owner.refresh_token = refreshToken;
-    const updateOwnerDetail = await hotelOwnerService.updateHotelOwner(owner);
+    const updateOwnerDetail =
+      await hotelOwnerService.updateHotelOwnerRefreshToken(owner);
     if (updateOwnerDetail === "FAILURE") {
+      ownerLogger.error(
+        `ownerLogin -> $OWNER_EMAIL=[${data.email}] : Couldnot update owner refreshtoken `
+      );
       throw new ApiError(500, "Couldnot update owner refreshtoken ");
     }
 
@@ -73,6 +95,10 @@ module.exports.ownerLogin = AsyncHandler(async (req, res) => {
     };
     delete owner.password;
     delete owner.refresh_token;
+
+    ownerLogger.info(
+      `ownerLogin -> $OWNER_EMAIL=[${data.email}] : Owner logged In Successfully`
+    );
     // console.log("##########END############################");
 
     return res
@@ -89,20 +115,31 @@ module.exports.ownerLogin = AsyncHandler(async (req, res) => {
 module.exports.ownerLogout = AsyncHandler(async (req, res) => {
   try {
     // console.log("##########START############################");
+    let { owner_id: owner_authid } = req.auth;
     let { ownerid } = req.params;
 
-    let data = await hotelOwnerService.getHotelOwnerById(ownerid);
+    let data = await hotelOwnerService.getHotelOwnerById(owner_authid);
     if (data == "FAILURE") {
+      ownerLogger.error(
+        `ownerLogout -> $OWNER_ID=[${owner_authid}] : owner_id invalid`
+      );
       throw new ApiError(401, "owner_id invalid");
     }
 
-    data.refresh_token = "";
-    let updatedResult = await hotelOwnerService.updateHotelOwner(data);
+    data.refresh_token = null;
+    let updatedResult = await hotelOwnerService.updateHotelOwnerRefreshToken(
+      data
+    );
     if (updatedResult == "FAILURE") {
+      ownerLogger.error(
+        `ownerLogout -> $OWNER_ID=[${owner_authid}] : cannot remove owner refreshtoken`
+      );
       throw new ApiError(500, "cannot remove owner refreshtoken");
     }
+    ownerLogger.info(
+      `ownerLogout -> $OWNER_ID=[${owner_authid}] : owner logged Out successfully`
+    );
     // console.log("##########END############################");
-
     const options = {
       httpOnly: true,
       secure: true,
@@ -111,7 +148,7 @@ module.exports.ownerLogout = AsyncHandler(async (req, res) => {
       .status(200)
       .clearCookie("userRole", options)
       .clearCookie("accessToken", options)
-      .json(new ApiResponse(200, {}, "owner logged Out"));
+      .json(new ApiResponse(200, {}, "owner logged Out successfully"));
   } catch (error) {
     throw error;
   }

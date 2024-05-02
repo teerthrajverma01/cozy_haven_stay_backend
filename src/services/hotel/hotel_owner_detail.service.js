@@ -75,10 +75,27 @@ module.exports.updateHotelOwner = async (data) => {
     const [result] = await models.hotelOwnerDetailModel.update(
       {
         owner_name: data.owner_name,
-
-        gender: data.gender,
+        gender: data.gender, //input should be present
         contact_no: data.contact_no,
         address: data.address,
+      },
+      {
+        where: {
+          owner_id: data.owner_id,
+        },
+      }
+    );
+    return result; //noofrowsaffected
+  } catch (error) {
+    console.log(error);
+    return "FAILURE";
+  }
+};
+// update refresh token
+module.exports.updateHotelOwnerRefreshToken = async (data) => {
+  try {
+    const [result] = await models.hotelOwnerDetailModel.update(
+      {
         refresh_token: data.refresh_token,
       },
       {

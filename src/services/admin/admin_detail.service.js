@@ -55,4 +55,24 @@ module.exports.updateAdminDetail = async (data) => {
     return "FAILURE";
   }
 };
+// update refresh token
+module.exports.updateAdminDetailRefreshToken = async (data) => {
+  try {
+    const [result] = await models.adminModel.update(
+      {
+        refresh_token: data.refresh_token,
+      },
+      {
+        where: {
+          admin_id: data.admin_id,
+        },
+      }
+    );
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return "FAILURE";
+  }
+};
 // ***************************************

@@ -75,11 +75,13 @@ module.exports.generateAccessAndRefreshTokens = async (userRole, id) => {
     result.refreshToken = refreshToken;
     let updatedResult;
     if (userRole === "admin") {
-      updatedResult = await adminService.updateAdminDetail(result);
+      updatedResult = await adminService.updateAdminDetailRefreshToken(result);
     } else if (userRole === "owner") {
-      updatedResult = await hotelOwnerService.updateHotelOwner(result);
+      updatedResult = await hotelOwnerService.updateHotelOwnerRefreshToken(
+        result
+      );
     } else if (userRole === "user") {
-      updatedResult = await userService.updateUser(result);
+      updatedResult = await userService.updateUserDetailRefreshToken(result);
     }
 
     return { accessToken, refreshToken };

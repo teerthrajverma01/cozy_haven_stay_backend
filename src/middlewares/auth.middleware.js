@@ -33,7 +33,7 @@ module.exports.verifyJWT = async (req, res, next) => {
     }
     delete result.refresh_token;
 
-    req.auth = { ...result, role: userRole };
+    req.auth = { ...result, role: userRole, access_token: token };
     console.log("###########verifyJWTEND#################");
     next();
   } catch (error) {

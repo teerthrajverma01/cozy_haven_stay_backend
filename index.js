@@ -39,17 +39,7 @@ const errorHandler = require("./src/middlewares/error.middleware");
 app.use(errorHandler);
 
 // **************************************************************
-// *********test***********************
-// let inputPassword = "testadminpassword2";
-// bcrypt
-//   .hash(inputPassword, 10)
-//   .then((hashedPassword) => {
-//     console.log(hashedPassword + "##");
-//   })
-//   .catch((error) => {
-//     console.error("Error occurred during password hashing:", error);
-//   });
-// *********test***********************
+
 // post running at 3000
 const backendPort = process.env.PORT || 3000;
 app.listen(backendPort, () => {
@@ -57,3 +47,5 @@ app.listen(backendPort, () => {
 });
 
 module.exports = app; //for testing
+
+// ***********************************
