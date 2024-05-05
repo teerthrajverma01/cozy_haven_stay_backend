@@ -31,9 +31,6 @@ app.use("/api/owner/", ownerRouter);
 const userRouter = require("./src/routes/user.routes");
 app.use("/api/user/", userRouter);
 
-// refresh token (session time out not implemented)
-// ***************************************************************
-
 // error middleware
 const errorHandler = require("./src/middlewares/error.middleware");
 app.use(errorHandler);

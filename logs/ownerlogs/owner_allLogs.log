@@ -16,3 +16,4 @@
 2024-05-02T19:49:22.714Z [owner-service] info: ownerLogin -> $OWNER_EMAIL=[testowner3@gmail.com] : Owner logged In Successfully
 2024-05-02T19:49:27.064Z [owner-service] error: ownerLogout -> $OWNER_ID=[6] : cannot remove owner refreshtoken
 2024-05-02T19:49:51.912Z [owner-service] info: ownerLogout -> $OWNER_ID=[6] : owner logged Out successfully
+2024-05-05T06:02:28.201Z [owner-service] info: ownerLogin -> $OWNER_EMAIL=[testowner3@gmail.com] : Owner logged In Successfully

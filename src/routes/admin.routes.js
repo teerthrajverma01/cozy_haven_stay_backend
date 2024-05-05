@@ -1,4 +1,5 @@
 const { Router } = require("express");
+
 const {
   adminLogin,
   adminLogout,
@@ -17,7 +18,7 @@ const { adminValidator } = require("../middlewares/validation.middleware.js");
 const router = Router();
 
 // unsecured routes
-router.route("/login").post(adminLogin);
+router.route("/login").post(adminValidator, adminLogin);
 //secured routes (jwt verification needed)
 router.route("/logout/:adminid").post(verifyJWT, adminLogout);
 router.route("/dashboard/getadmin/:adminid").get(verifyJWT, getAdminById);

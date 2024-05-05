@@ -7,10 +7,25 @@ const adminService = require("../../services/admin/admin_detail.service");
 const userService = require("../../services/user/user_detail.service");
 const ownerService = require("../../services/hotel/hotel_owner_detail.service");
 
+const { validationResult } = require("express-validator");
+
 // get admin by id
 module.exports.getAdminById = AsyncHandler(async (req, res) => {
   try {
     // console.log("*******START********");
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const formattedErrors = [];
+      errors
+        .array()
+        .map((err) => formattedErrors.push({ [err.path]: err.msg }));
+
+      return res.status(422).json({
+        success: false,
+        errors: formattedErrors,
+      });
+    }
+
     let { admin_id: admin_authid } = req.auth;
     let { adminid } = req.params;
     console.log(adminid);

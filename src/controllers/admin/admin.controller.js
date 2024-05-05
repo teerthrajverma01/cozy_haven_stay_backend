@@ -9,10 +9,24 @@ require("dotenv").config();
 
 const adminService = require("../../services/admin/admin_detail.service");
 
+const { validationResult } = require("express-validator");
+
 // admin login
 module.exports.adminLogin = AsyncHandler(async (req, res) => {
   try {
     // console.log("*******START********");
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const formattedErrors = [];
+      errors
+        .array()
+        .map((err) => formattedErrors.push({ [err.path]: err.msg }));
+
+      return res.status(422).json({
+        success: false,
+        errors: formattedErrors,
+      });
+    }
     let data = req.body;
     //find the user
     let admin = await adminService.getAdminByEmail(data.admin_email);

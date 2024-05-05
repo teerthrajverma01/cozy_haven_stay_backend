@@ -5,3 +5,7 @@
 2024-05-02T19:08:02.948Z [admin_service] error: getAdminById -> $ADMIN_ID=[1] : Couldnot fetch admin detail
 2024-05-02T19:11:40.038Z [admin_service] error: getAdminById -> $ADMIN_ID=[1] : Couldnot fetch admin detail
 2024-05-02T19:11:56.857Z [admin_service] info: adminLogout -> $ADMIN_ID=[1] : admin logged Out successfully
+2024-05-03T07:23:14.845Z [admin_service] info: adminLogin -> $ADMIN_EMAIL=[testadmin1@gmail.com] : admin logged In Successfully
+2024-05-05T04:44:22.920Z [admin_service] info: adminLogin -> $ADMIN_EMAIL=[testadmin1@gmail.com] : admin logged In Successfully
+2024-05-05T04:44:54.569Z [admin_service] info: adminLogin -> $ADMIN_EMAIL=[testadmin1@gmail.com] : admin logged In Successfully
+2024-05-05T04:45:40.322Z [admin_service] info: adminLogin -> $ADMIN_EMAIL=[testadmin1@gmail.com] : admin logged In Successfully
