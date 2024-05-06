@@ -10,7 +10,7 @@ module.exports.addNewBookingDetail = async (data) => {
     return result.dataValues;
   } catch (error) {
     console.log(error);
-    return "Failure";
+    return "FAILURE";
   }
 };
 
@@ -50,7 +50,7 @@ module.exports.getPastBookingByUserID = async (user_id) => {
     return dataValuesArray;
   } catch (error) {
     console.log(error);
-    return "Failure";
+    return "FAILURE";
   }
 };
 //past booking by hotelid
@@ -70,7 +70,7 @@ module.exports.getPastBookingByHotelID = async (hotel_id) => {
     return dataValuesArray;
   } catch (error) {
     console.log(error);
-    return "Failure";
+    return "FAILURE";
   }
 };
 //current booking by userid
@@ -90,7 +90,7 @@ module.exports.getCurrentBookingByUserID = async (user_id) => {
     return dataValuesArray;
   } catch (error) {
     console.log(error);
-    return "Failure";
+    return "FAILURE";
   }
 };
 //current booking by hotelid
@@ -110,6 +110,6 @@ module.exports.getCurrentBookingByHotelID = async (hotel_id) => {
     return dataValuesArray;
   } catch (error) {
     console.log(error);
-    return "Failure";
+    return "FAILURE";
   }
 };

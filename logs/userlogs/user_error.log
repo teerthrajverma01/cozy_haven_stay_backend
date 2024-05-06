@@ -1,1 +1,4 @@
 2024-05-06T12:40:09.461Z [user-service] error: userLogin -> $USER_EMAIL=[testuser3@gmail.com] : Token error
+2024-05-06T12:54:22.177Z [user-service] error: getPastBooking -> $USER_ID=[3] : Couldnot fetch past bookings 
+2024-05-06T12:56:41.244Z [user-service] error: getPastBooking -> $USER_ID=[3] : Couldnot fetch past bookings 
+2024-05-06T12:56:57.864Z [user-service] error: getPastBooking -> $USER_ID=[3] : Couldnot fetch past bookings 

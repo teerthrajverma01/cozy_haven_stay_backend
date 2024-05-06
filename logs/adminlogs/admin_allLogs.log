@@ -9,3 +9,8 @@
 2024-05-05T04:44:22.920Z [admin_service] info: adminLogin -> $ADMIN_EMAIL=[testadmin1@gmail.com] : admin logged In Successfully
 2024-05-05T04:44:54.569Z [admin_service] info: adminLogin -> $ADMIN_EMAIL=[testadmin1@gmail.com] : admin logged In Successfully
 2024-05-05T04:45:40.322Z [admin_service] info: adminLogin -> $ADMIN_EMAIL=[testadmin1@gmail.com] : admin logged In Successfully
+2024-05-06T13:42:11.502Z [admin_service] info: deleteUserById -> $ADMIN_ID=[undefined] : User Deleted Successfully
+2024-05-06T13:42:16.167Z [admin_service] info: deleteUserById -> $ADMIN_ID=[undefined] : User Deleted Successfully
+2024-05-06T13:42:20.341Z [admin_service] info: deleteUserById -> $ADMIN_ID=[undefined] : User Deleted Successfully
+2024-05-06T13:42:39.023Z [admin_service] info: deleteUserById -> $ADMIN_ID=[undefined] : User Deleted Successfully
+2024-05-06T13:42:46.954Z [admin_service] info: deleteUserById -> $ADMIN_ID=[undefined] : User Deleted Successfully

@@ -29,13 +29,13 @@ router
   .post(verifyJWT, addReviewToHotel);
 router
   .route("/dashboard/booking/past-bookings/get-by-user/:userid")
-  .post(verifyJWT, getPastBooking);
+  .get(verifyJWT, getPastBooking);
 router
   .route("/dashboard/booking/current-booking/cancel-booking")
   .put(verifyJWT, cancelBookingByBookingID);
 router
   .route("/dashboard/booking/current-booking/:userid")
-  .post(verifyJWT, getCurrentBooking);
+  .get(verifyJWT, getCurrentBooking);
 router.route("/newbooking").post(verifyJWT, createNewBooking);
 
 module.exports = router;

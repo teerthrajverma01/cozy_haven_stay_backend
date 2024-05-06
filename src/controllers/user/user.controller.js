@@ -167,7 +167,6 @@ module.exports.userLogout = AsyncHandler(async (req, res) => {
 });
 
 // new booking
-
 module.exports.createNewBooking = AsyncHandler(async (req, res) => {
   try {
     // console.log("##########START############################");
