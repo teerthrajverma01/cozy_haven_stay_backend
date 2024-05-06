@@ -61,3 +61,4 @@
 2024-05-06T14:09:27.847Z [owner-service] info: addRoomDetail -> $OWNER_ID=[5] : added roomdetail successfully
 2024-05-06T15:40:41.034Z [owner-service] info: ownerLogin -> $OWNER_EMAIL=[owner2@gmail.com] : Owner logged In Successfully
 2024-05-06T15:50:10.545Z [owner-service] info: ownerLogin -> $OWNER_EMAIL=[owner2@gmail.com] : Owner logged In Successfully
+2024-05-06T16:17:59.500Z [owner-service] info: updateBookingStatus -> $OWNER_ID=[2] : updated booking status 

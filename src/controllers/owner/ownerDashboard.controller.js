@@ -5,6 +5,7 @@ const ownerLogger = require("../../../logger/ownerLogger/index");
 
 const hotelOwnerService = require("../../services/hotel/hotel_owner_detail.service");
 const hotelService = require("../../services/hotel/hotel.service");
+const bookingService = require("../../services/booking/booking.service");
 const RoomService = require("../../services/hotel/room.service");
 
 // update owner_detail
@@ -359,6 +360,7 @@ module.exports.updateBookingStatus = AsyncHandler(async (req, res) => {
   try {
     console.log("###########START#################");
     let data = req.body;
+    console.log(data);
     let { owner_id: owner_authid } = req.auth;
 
     if (owner_authid !== data.owner_id) {
@@ -367,19 +369,20 @@ module.exports.updateBookingStatus = AsyncHandler(async (req, res) => {
       );
       throw new ApiError(401, "unauthorized access");
     }
-    console.log("############################");
-
+    console.log("*****************************************");
     let updateResult = await bookingService.updateBookingDetail(data);
     if (updateResult === "FAILURE") {
       ownerLogger.error(
-        ` updateBookingStatus-> $OWNER_ID=[${owner_id}] : couldnot update status of booking`
+        ` updateBookingStatus-> $OWNER_ID=[${owner_authid}] : couldnot update status of booking`
       );
       throw new ApiError(500, "couldnot update status of booking");
     }
+    console.log("*****************************************");
+
     ownerLogger.info(
-      `updateBookingStatus -> $OWNER_ID=[${owner_id}] : updated booking status `
+      `updateBookingStatus -> $OWNER_ID=[${owner_authid}] : updated booking status `
     );
-    // console.log("#########END############");
+    console.log("#########END############");
     return res
       .status(200)
       .json(new ApiResponse(200, "", "updated booking status"));
