@@ -1,5 +1,6 @@
 const db = require("../../config/dbconfig");
 const models = require("../../models/index");
+const { Op } = require("sequelize");
 
 // get room by room id
 module.exports.getRoomById = async (roomId) => {
@@ -108,3 +109,31 @@ module.exports.deleteExistingRoom = async (id) => {
 // *********************************************************
 
 // get all rooms by hotelid, checkindate and checkoutdate   -> when someone clicks inside a hotel
+module.exports.getRoomByInput = async (data) => {
+  try {
+    //find booked rooms within the given date range
+    const bookedRooms = await models.bookingDescriptionModel.findAll({
+      where: {
+        checkin_date: { [Op.lte]: checkoutDate },
+        checkout_date: { [Op.gte]: checkinDate },
+      },
+      attributes: ["room_id"],
+    });
+    const bookedRoomIds = bookedRooms.map((booking) => booking.room_id);
+
+    //find available rooms for the given hotel ID
+    const availableRooms = await RoomDetail.findAll({
+      where: {
+        hotel_id: hotelId,
+        room_id: { [Op.notIn]: bookedRoomIds },
+      },
+    });
+    let availableRoomsList = availableRooms.map(
+      (instance) => instance.dataValues
+    );
+    return availableRoomsList;
+  } catch (error) {
+    console.error("Error fetching available rooms:", error);
+    return "FAILURE";
+  }
+};

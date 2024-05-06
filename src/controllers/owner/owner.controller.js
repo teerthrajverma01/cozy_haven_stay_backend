@@ -47,7 +47,7 @@ module.exports.ownerLogin = AsyncHandler(async (req, res) => {
   try {
     // console.log("##########START############################");
     let data = req.body;
-    //find the user
+    //find the owner
     let owner = await hotelOwnerService.getHotelOwnerByEmail(data.email);
     if (owner === "FAILURE") {
       ownerLogger.error(
@@ -77,7 +77,7 @@ module.exports.ownerLogin = AsyncHandler(async (req, res) => {
     let accessToken = await tokens.accessToken;
     let refreshToken = await tokens.refreshToken;
 
-    // update access token in admin_detail
+    // update access token in owner_detail
     owner.refresh_token = refreshToken;
     const updateOwnerDetail =
       await hotelOwnerService.updateHotelOwnerRefreshToken(owner);
@@ -153,12 +153,3 @@ module.exports.ownerLogout = AsyncHandler(async (req, res) => {
     throw error;
   }
 });
-
-// {
-// "owner_name":"testowner1",
-// "password":"testpassword1",
-// "email":"testemail1",
-// "gender":"MALE",
-// "contact_no":"testcontactno1",
-// "address":"testaddress1"
-// }

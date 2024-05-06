@@ -30,6 +30,9 @@ app.use("/api/owner/", ownerRouter);
 // user router
 const userRouter = require("./src/routes/user.routes");
 app.use("/api/user/", userRouter);
+// common router
+const commonRouter = require("./src/routes/common.routes");
+app.use("/api/", commonRouter);
 
 // error middleware
 const errorHandler = require("./src/middlewares/error.middleware");

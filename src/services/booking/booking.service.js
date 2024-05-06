@@ -1,6 +1,7 @@
 // add new booking
 
 const models = require("../../models");
+const { Op } = require("sequelize");
 
 // 1-> user books single/multiple room -> new booking entry-> {add all booking description for all rooms [inside booking_description_detail]}
 module.exports.addNewBookingDetail = async (data) => {
@@ -29,5 +30,86 @@ module.exports.updateBookingDetail = async (data) => {
   } catch (error) {
     console.log(error);
     return "FAILURE";
+  }
+};
+
+//past booking by userid
+module.exports.getPastBookingByUserID = async (user_id) => {
+  try {
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const result = await models.bookingDetailModel.findAll({
+      where: {
+        user_id: user_id,
+        checkout_date: {
+          [Op.lt]: today,
+        },
+      },
+    });
+    let dataValuesArray = result.map((instance) => instance.dataValues);
+    return dataValuesArray;
+  } catch (error) {
+    console.log(error);
+    return "Failure";
+  }
+};
+//past booking by hotelid
+module.exports.getPastBookingByHotelID = async (hotel_id) => {
+  try {
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const result = await models.bookingDetailModel.findAll({
+      where: {
+        hotel_id: hotel_id,
+        checkout_date: {
+          [Op.lt]: today,
+        },
+      },
+    });
+    let dataValuesArray = result.map((instance) => instance.dataValues);
+    return dataValuesArray;
+  } catch (error) {
+    console.log(error);
+    return "Failure";
+  }
+};
+//current booking by userid
+module.exports.getCurrentBookingByUserID = async (user_id) => {
+  try {
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const result = await models.bookingDetailModel.findAll({
+      where: {
+        user_id: user_id,
+        checkout_date: {
+          [Op.gt]: today,
+        },
+      },
+    });
+    let dataValuesArray = result.map((instance) => instance.dataValues);
+    return dataValuesArray;
+  } catch (error) {
+    console.log(error);
+    return "Failure";
+  }
+};
+//current booking by hotelid
+module.exports.getCurrentBookingByHotelID = async (hotel_id) => {
+  try {
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const result = await models.bookingDetailModel.findAll({
+      where: {
+        hotel_id: hotel_id,
+        checkout_date: {
+          [Op.gt]: today,
+        },
+      },
+    });
+    let dataValuesArray = result.map((instance) => instance.dataValues);
+    return dataValuesArray;
+  } catch (error) {
+    console.log(error);
+    return "Failure";
   }
 };

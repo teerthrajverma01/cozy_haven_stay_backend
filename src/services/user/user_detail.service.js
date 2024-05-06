@@ -29,6 +29,17 @@ module.exports.getUserById = async (id) => {
     return "FALIURE";
   }
 };
+module.exports.getUserByEmail = async (id) => {
+  try {
+    const user_detail = await models.userDetailModel.findOne({
+      where: { email: email },
+    });
+    return user_detail.dataValues;
+  } catch (error) {
+    console.log(error);
+    return "FALIURE";
+  }
+};
 
 // add new user
 // 1->user signup
@@ -79,7 +90,7 @@ module.exports.updateUserDetail = async (data) => {
   }
 };
 // update refresh token
-module.exports.updateUserDetailRefreshToken = async (data) => {
+module.exports.updateUserRefreshToken = async (data) => {
   try {
     const [result] = await models.userDetailModel.update(
       {

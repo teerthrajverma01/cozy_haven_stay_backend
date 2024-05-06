@@ -14,6 +14,9 @@ const {
   addRoomDetail,
   deleteRoomDetailByRoomId,
   updateRoomDetailByRoomId,
+  getPastBooking,
+  getCurrentBooking,
+  updateBookingStatus,
 } = require("../controllers/owner/ownerDashboard.controller.js");
 const { verifyJWT } = require("../middlewares/auth.middleware.js");
 
@@ -44,5 +47,15 @@ router
   .route("/dashboard/delete-room/:roomid")
   .delete(verifyJWT, deleteRoomDetailByRoomId);
 router.route("/dashboard/update-room").put(verifyJWT, updateRoomDetailByRoomId);
+//###########booking############
+router
+  .route("/dashboard/booking/past-booking/:hotelid")
+  .put(verifyJWT, getPastBooking);
+router
+  .route("/dashboard/booking/current-booking/:hotelid")
+  .put(verifyJWT, getCurrentBooking);
+router
+  .route("/dashboard/booking/current-booking/update-status")
+  .put(verifyJWT, updateBookingStatus);
 
 module.exports = router;
