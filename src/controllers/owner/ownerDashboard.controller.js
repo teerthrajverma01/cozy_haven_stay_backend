@@ -101,7 +101,7 @@ module.exports.getHotelDetailByOwnerId = AsyncHandler(async (req, res) => {
   try {
     // console.log("#########START############");
     let { owner_id: owner_authid } = req.auth;
-    let { ownerid } = req.params;
+    let ownerid = parseInt(req.params.ownerid);
     let hotelData = await hotelService.getHotelDetailById(ownerid);
     if (hotelData == "FAILURE") {
       ownerLogger.error(

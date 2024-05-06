@@ -32,7 +32,7 @@ module.exports.searchHotel = AsyncHandler(async (req, res) => {
   }
 });
 // get all rooms by hotelid+checkindate and checkoutdate
-module.exports.getRoomByHotelID = AsyncHandler(async (req, res) => {
+module.exports.getRoomByInput = AsyncHandler(async (req, res) => {
   try {
     let data = req.body;
     // data = {hotel_id,inputCheckoutDate,inputCheckoutDate}

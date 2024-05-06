@@ -29,7 +29,7 @@ module.exports.getUserById = async (id) => {
     return "FALIURE";
   }
 };
-module.exports.getUserByEmail = async (id) => {
+module.exports.getUserByEmail = async (email) => {
   try {
     const user_detail = await models.userDetailModel.findOne({
       where: { email: email },

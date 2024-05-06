@@ -1,0 +1,4 @@
+2024-05-06T12:37:34.890Z [user-service] info: userRegister -> $USER_EMAIL=[testuser3@gmail.com] : new user registered
+2024-05-06T12:40:09.461Z [user-service] error: userLogin -> $USER_EMAIL=[testuser3@gmail.com] : Token error
+2024-05-06T12:42:45.055Z [user-service] info: userLogin -> $user_EMAIL=[testuser3@gmail.com] : user logged In Successfully
+2024-05-06T12:44:37.272Z [user-service] info: userLogout -> $USER_ID=[3] : user logged Out successfully

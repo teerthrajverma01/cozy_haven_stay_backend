@@ -42,7 +42,7 @@ module.exports.updateUserDetail = AsyncHandler(async (req, res) => {
 module.exports.getPastBooking = AsyncHandler(async (req, res) => {
   try {
     // console.log("#########START############");
-    let { userid } = req.params;
+    let userid = parseInt(req.params.userid);
     let { user_id: user_authid } = req.auth;
 
     if (user_authid !== userid) {
@@ -111,7 +111,7 @@ module.exports.addReviewToHotel = AsyncHandler(async (req, res) => {
 module.exports.getCurrentBooking = AsyncHandler(async (req, res) => {
   try {
     // console.log("#########START############");
-    let { userid } = req.params;
+    let userid = parseInt(req.params.userid);
     let { user_id: user_authid } = req.auth;
 
     if (user_authid !== userid) {

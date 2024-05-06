@@ -14,13 +14,14 @@ const bookingService = require("../../services/booking/booking.service");
 const bookingDescriptionService = require("../../services/booking/booking_description.service");
 
 // register new user
-module.exports.userRegister = AsyncHandler(async (userData) => {
+module.exports.userRegister = AsyncHandler(async (req, res) => {
   try {
     try {
       // console.log("##########START############################");
       let data = req.body;
       // check if user already present or not
       // encrypt the password
+
       data.password = await encryptPassword(data.password);
       // create entry in db
       let result = await userService.addNewUser(data);
@@ -30,6 +31,7 @@ module.exports.userRegister = AsyncHandler(async (userData) => {
         );
         throw new ApiError(500, "Couldnot add new user to database ");
       }
+
       // remove password and refreshtoken  from response
       delete result.password;
       delete result.refresh_token;
@@ -50,7 +52,7 @@ module.exports.userRegister = AsyncHandler(async (userData) => {
 });
 
 // login existing user
-module.exports.userLogin = AsyncHandler(async () => {
+module.exports.userLogin = AsyncHandler(async (req, res) => {
   try {
     // console.log("##########START############################");
     let data = req.body;
@@ -118,11 +120,11 @@ module.exports.userLogin = AsyncHandler(async () => {
 });
 
 // logout existing user
-module.exports.userLogout = AsyncHandler(async () => {
+module.exports.userLogout = AsyncHandler(async (req, res) => {
   try {
     // console.log("##########START############################");
     let { user_id: user_authid } = req.auth;
-    let { userid } = req.params;
+    let userid = parseInt(req.params.userid);
 
     if (user_authid !== userid) {
       userLogger.error(
@@ -166,7 +168,7 @@ module.exports.userLogout = AsyncHandler(async () => {
 
 // new booking
 
-module.exports.createNewBooking = AsyncHandler(async () => {
+module.exports.createNewBooking = AsyncHandler(async (req, res) => {
   try {
     // console.log("##########START############################");
     let { user_id: user_authid } = req.auth;

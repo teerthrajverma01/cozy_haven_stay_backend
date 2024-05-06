@@ -3,6 +3,7 @@ const {
   userRegister,
   userLogin,
   userLogout,
+  createNewBooking,
 } = require("../controllers/user/user.controller.js");
 const {
   updateUserDetail,
@@ -20,7 +21,7 @@ const router = Router();
 router.route("/register").post(userRegister);
 router.route("/login").post(userLogin);
 //secured routes (jwt verification needed)
-router.route("/logout").post(verifyJWT, userLogout);
+router.route("/logout/:userid").post(verifyJWT, userLogout);
 router.route("/dashboard/update-user").post(verifyJWT, updateUserDetail);
 // ########booking#######
 router

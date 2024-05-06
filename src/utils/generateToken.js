@@ -81,7 +81,7 @@ module.exports.generateAccessAndRefreshTokens = async (userRole, id) => {
         result
       );
     } else if (userRole === "user") {
-      updatedResult = await userService.updateUserDetailRefreshToken(result);
+      updatedResult = await userService.updateUserRefreshToken(result);
     }
 
     return { accessToken, refreshToken };
