@@ -2,3 +2,6 @@
 2024-05-06T12:54:22.177Z [user-service] error: getPastBooking -> $USER_ID=[3] : Couldnot fetch past bookings 
 2024-05-06T12:56:41.244Z [user-service] error: getPastBooking -> $USER_ID=[3] : Couldnot fetch past bookings 
 2024-05-06T12:56:57.864Z [user-service] error: getPastBooking -> $USER_ID=[3] : Couldnot fetch past bookings 
+2024-05-06T15:18:22.977Z [user-service] error:  createNewBooking-> $USER_ID=[1] : Booking successful
+2024-05-06T15:21:41.635Z [user-service] error:  createNewBooking-> $USER_ID=[1] : unauthorized access
+2024-05-06T15:22:00.364Z [user-service] error:  createNewBooking-> $USER_ID=[2] : Booking successful

@@ -36,3 +36,9 @@
 2024-05-06T13:26:00.948Z [user-service] info: userLogin -> $user_EMAIL=[email1@gmail.com] : user logged In Successfully
 2024-05-06T13:26:54.739Z [user-service] info: userLogin -> $user_EMAIL=[email1@gmail.com] : user logged In Successfully
 2024-05-06T13:27:13.342Z [user-service] info: updateUserDetail -> $USER_ID=[1] : user updated
+2024-05-06T15:04:53.805Z [user-service] info: userLogin -> $user_EMAIL=[email1@gmail.com] : user logged In Successfully
+2024-05-06T15:12:07.831Z [user-service] info: userLogin -> $user_EMAIL=[email1@gmail.com] : user logged In Successfully
+2024-05-06T15:18:22.977Z [user-service] error:  createNewBooking-> $USER_ID=[1] : Booking successful
+2024-05-06T15:21:41.635Z [user-service] error:  createNewBooking-> $USER_ID=[1] : unauthorized access
+2024-05-06T15:21:53.620Z [user-service] info: userLogin -> $user_EMAIL=[email2@gmail.com] : user logged In Successfully
+2024-05-06T15:22:00.364Z [user-service] error:  createNewBooking-> $USER_ID=[2] : Booking successful

@@ -169,10 +169,10 @@ module.exports.userLogout = AsyncHandler(async (req, res) => {
 // new booking
 module.exports.createNewBooking = AsyncHandler(async (req, res) => {
   try {
-    // console.log("##########START############################");
+    console.log("##########START############################");
     let { user_id: user_authid } = req.auth;
     let data = req.body;
-    //data ={hotel_id,user_id,no_rooms,total_booking_amount,checkin_date,checkout_date,booking_status:BOOKED,bookingDescriptionList:[{booking_id,room_id,booking_amount_room,checkin_date,checkout_date},...]}
+    // data ={hotel_id,user_id,no_rooms,total_booking_amount,checkin_date,checkout_date,booking_status:BOOKED,bookingDescriptionList:[{booking_id,room_id,booking_amount_room,checkin_date,checkout_date},...]}
 
     if (user_authid !== data.user_id) {
       userLogger.error(
@@ -180,16 +180,18 @@ module.exports.createNewBooking = AsyncHandler(async (req, res) => {
       );
       throw new ApiError(401, "unauthorized access");
     }
+    console.log("##############################");
 
     let bookingData = {
-      hotel_id,
-      user_id,
-      no_rooms,
-      total_booking_amount,
-      checkin_date,
-      checkout_date,
-      booking: "BOOKED",
+      hotel_id: data.hotel_id,
+      user_id: data.user_id,
+      no_rooms: data.no_rooms,
+      total_booking_amount: data.total_booking_amount,
+      checkin_date: data.checkin_date,
+      checkout_date: data.checkout_date,
+      booking_status: "BOOKED",
     };
+    console.log(bookingData);
     let bookingResult = await bookingService.addNewBookingDetail(bookingData);
     if (bookingResult === "FAILURE") {
       userLogger.error(
@@ -197,9 +199,11 @@ module.exports.createNewBooking = AsyncHandler(async (req, res) => {
       );
       throw new ApiError(500, "couldnot add new booking to database");
     }
+    console.log("##############################");
 
     let output = [];
     for (let bookingDescriptionItem of data.bookingDescriptionList) {
+      bookingDescriptionItem.booking_id = bookingResult.booking_id;
       let bookingDescriptionData =
         await bookingDescriptionService.addNewBookingDescription(
           bookingDescriptionItem
@@ -217,7 +221,7 @@ module.exports.createNewBooking = AsyncHandler(async (req, res) => {
     userLogger.error(
       ` createNewBooking-> $USER_ID=[${user_authid}] : Booking successful`
     );
-    // console.log("##############END####################")
+    console.log("##############END####################");
     return res
       .status(200)
       .json(
