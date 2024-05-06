@@ -225,7 +225,7 @@ module.exports.createNewBooking = AsyncHandler(async (req, res) => {
     return res
       .status(200)
       .json(
-        new ApiResponse(200, [bookingData, ...output], "Booking successful")
+        new ApiResponse(200, [bookingResult, ...output], "Booking successful")
       );
   } catch (error) {
     throw error;

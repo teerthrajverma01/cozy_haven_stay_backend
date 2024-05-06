@@ -357,25 +357,27 @@ module.exports.getCurrentBooking = AsyncHandler(async (req, res) => {
 // update booking status
 module.exports.updateBookingStatus = AsyncHandler(async (req, res) => {
   try {
+    console.log("###########START#################");
     let data = req.body;
-    let { user_id: user_authid } = req.auth;
+    let { owner_id: owner_authid } = req.auth;
 
-    if (user_authid !== user_id) {
-      userLogger.error(
-        ` updateBookingStatus-> $USER_ID=[${user_authid}] : unauthorized access`
+    if (owner_authid !== data.owner_id) {
+      ownerLogger.error(
+        ` updateBookingStatus-> $OWNER_ID=[${owner_authid}] : unauthorized access`
       );
       throw new ApiError(401, "unauthorized access");
     }
+    console.log("############################");
 
     let updateResult = await bookingService.updateBookingDetail(data);
     if (updateResult === "FAILURE") {
-      userLogger.error(
-        ` updateBookingStatus-> $USER_ID=[${user_authid}] : couldnot update status of booking`
+      ownerLogger.error(
+        ` updateBookingStatus-> $OWNER_ID=[${owner_id}] : couldnot update status of booking`
       );
       throw new ApiError(500, "couldnot update status of booking");
     }
-    userLogger.info(
-      `updateBookingStatus -> $USER_ID=[${user_authid}] : updated booking status `
+    ownerLogger.info(
+      `updateBookingStatus -> $OWNER_ID=[${owner_id}] : updated booking status `
     );
     // console.log("#########END############");
     return res

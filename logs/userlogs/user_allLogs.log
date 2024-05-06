@@ -42,3 +42,8 @@
 2024-05-06T15:21:41.635Z [user-service] error:  createNewBooking-> $USER_ID=[1] : unauthorized access
 2024-05-06T15:21:53.620Z [user-service] info: userLogin -> $user_EMAIL=[email2@gmail.com] : user logged In Successfully
 2024-05-06T15:22:00.364Z [user-service] error:  createNewBooking-> $USER_ID=[2] : Booking successful
+2024-05-06T15:28:16.317Z [user-service] info: userLogin -> $user_EMAIL=[email2@gmail.com] : user logged In Successfully
+2024-05-06T15:28:28.537Z [user-service] error:  createNewBooking-> $USER_ID=[2] : Booking successful
+2024-05-06T15:32:24.514Z [user-service] info: cancelBookingByBookingID -> $USER_ID=[2] : updated booking status 
+2024-05-06T15:38:09.149Z [user-service] error:  cancelBookingByBookingID-> $USER_ID=[2] : unauthorized access
+2024-05-06T15:52:09.656Z [user-service] error:  cancelBookingByBookingID-> $USER_ID=[undefined] : unauthorized access
