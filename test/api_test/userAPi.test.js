@@ -3,6 +3,7 @@ const server = require("../../index");
 let chai = require("chai");
 let chaiHttp = require("chai-http");
 
+// assertion style shoot
 chai.should();
 chai.use(chaiHttp);
 
