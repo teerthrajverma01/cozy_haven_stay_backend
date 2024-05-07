@@ -26,19 +26,15 @@ const BookingDetail = db.define(
     },
     no_rooms: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
     total_booking_amount: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
     checkin_date: {
       type: DataTypes.DATEONLY,
-      allowNull: false,
     },
     checkout_date: {
       type: DataTypes.DATEONLY,
-      allowNull: false,
     },
     booking_status: {
       type: DataTypes.ENUM(
@@ -47,7 +43,6 @@ const BookingDetail = db.define(
         "REFUND_APPROVED",
         "REFUND_CANCELED"
       ),
-      allowNull: false,
     },
   },
   {

@@ -1,5 +1,6 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, Sequelize } = require("sequelize");
 const db = require("../config/dbconfig");
+const models = require("./index");
 
 const ReviewDetail = db.define(
   "review_detail",
@@ -19,11 +20,9 @@ const ReviewDetail = db.define(
     },
     review: {
       type: DataTypes.TEXT,
-      allowNull: false,
     },
     rating: {
       type: DataTypes.FLOAT(2, 1),
-      allowNull: false,
     },
     time_stamp: {
       type: DataTypes.DATE,
