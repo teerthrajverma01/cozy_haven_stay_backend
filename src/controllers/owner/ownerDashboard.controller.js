@@ -65,6 +65,14 @@ module.exports.addNewHotelDetail = AsyncHandler(async (req, res) => {
     let { owner_id: owner_authid } = req.auth;
     let data = req.body;
 
+    if (owner_authid !== data.owner_id) {
+      console.log("#############################");
+      ownerLogger.error(
+        ` ownerLogout-> $OWNER_ID=[${owner_authid}] : unauthorized access`
+      );
+      throw new ApiError(401, "unauthorized access");
+    }
+
     // adding hotel data to hotel_detail table
     let hotelInsertResult = await hotelService.addNewHotel(data);
     if (hotelInsertResult == "FAILURE") {
@@ -93,6 +101,16 @@ module.exports.updateHotelDetail = AsyncHandler(async (req, res) => {
     // console.log("#########START############");
     let { owner_id: owner_authid } = req.auth;
     let data = req.body;
+
+    if (owner_authid !== data.owner_id) {
+      console.log("#############################");
+      ownerLogger.error(
+        ` ownerLogout-> $OWNER_ID=[${owner_authid}] : unauthorized access`
+      );
+      throw new ApiError(401, "unauthorized access");
+    }
+
+    //##############
     let hotelUpdateResult = await hotelService.updateHotelDetail(data);
     if (hotelUpdateResult === "FAILURE") {
       ownerLogger.error(
@@ -118,6 +136,14 @@ module.exports.getHotelDetailByOwnerId = AsyncHandler(async (req, res) => {
     // console.log("#########START############");
     let { owner_id: owner_authid } = req.auth;
     let ownerid = parseInt(req.params.ownerid);
+    if (owner_authid !== ownerid) {
+      console.log("#############################");
+      ownerLogger.error(
+        ` ownerLogout-> $OWNER_ID=[${owner_authid}] : unauthorized access`
+      );
+      throw new ApiError(401, "unauthorized access");
+    }
+
     let hotelData = await hotelService.getHotelDetailById(ownerid);
     if (hotelData == "FAILURE") {
       ownerLogger.error(
@@ -148,6 +174,14 @@ module.exports.getAllRoomDetailByHotelId = AsyncHandler(async (req, res) => {
     let { owner_id: owner_authid } = req.auth;
 
     let hotelid = parseInt(req.params.hotelid);
+    // if (owner_authid !== ownerid) {
+    //   console.log("#############################");
+    //   ownerLogger.error(
+    //     ` ownerLogout-> $OWNER_ID=[${owner_authid}] : unauthorized access`
+    //   );
+    //   throw new ApiError(401, "unauthorized access");
+    // }
+
     let result = await RoomService.getAllRoomsByHotelId(hotelid);
     if (result == "FAILURE") {
       ownerLogger.error(
@@ -174,6 +208,15 @@ module.exports.getRoomDetailByRoomId = AsyncHandler(async (req, res) => {
     // console.log("#########START############");
     let { owner_id: owner_authid } = req.auth;
     let roomid = parseInt(req.params.roomid);
+
+    // if (owner_authid !== ownerid) {
+    //   console.log("#############################");
+    //   ownerLogger.error(
+    //     ` ownerLogout-> $OWNER_ID=[${owner_authid}] : unauthorized access`
+    //   );
+    //   throw new ApiError(401, "unauthorized access");
+    // }
+
     let result = await RoomService.getRoomById(roomid);
     if (result == "FAILURE") {
       ownerLogger.error(
@@ -199,6 +242,15 @@ module.exports.addRoomDetail = AsyncHandler(async (req, res) => {
     // console.log("#########START############");
     let { owner_id: owner_authid } = req.auth;
     let data = req.body;
+
+    if (owner_authid !== data.owner_id) {
+      console.log("#############################");
+      ownerLogger.error(
+        ` ownerLogout-> $OWNER_ID=[${owner_authid}] : unauthorized access`
+      );
+      throw new ApiError(401, "unauthorized access");
+    }
+
     let result = await RoomService.addNewRoom(data);
     if (result == "FAILURE") {
       ownerLogger.error(
@@ -226,6 +278,15 @@ module.exports.deleteRoomDetailByRoomId = AsyncHandler(async (req, res) => {
     // console.log("#########START############");
     let { owner_id: owner_authid } = req.auth;
     let roomid = parseInt(req.params.roomid);
+
+    // if (owner_authid !== data.owner_id) {
+    //   console.log("#############################");
+    //   ownerLogger.error(
+    //     ` ownerLogout-> $OWNER_ID=[${owner_authid}] : unauthorized access`
+    //   );
+    //   throw new ApiError(401, "unauthorized access");
+    // }
+
     let result = await RoomService.deleteExistingRoom(roomid);
     if (result === 0) {
       ownerLogger.error(
@@ -258,6 +319,15 @@ module.exports.updateRoomDetailByRoomId = AsyncHandler(async (req, res) => {
     // console.log("#########START############");
     let { owner_id: owner_authid } = req.auth;
     let data = req.body;
+
+    if (owner_authid !== data.owner_id) {
+      console.log("#############################");
+      ownerLogger.error(
+        ` ownerLogout-> $OWNER_ID=[${owner_authid}] : unauthorized access`
+      );
+      throw new ApiError(401, "unauthorized access");
+    }
+
     let result = await RoomService.updateExistingRoom(data);
     if (result == "FAILURE") {
       ownerLogger.error(

@@ -147,8 +147,8 @@ module.exports.ownerLogout = AsyncHandler(async (req, res) => {
 
     if (owner_authid !== ownerid) {
       console.log("#############################");
-      userLogger.error(
-        ` ownerLogout-> $OWNER_ID=[${user_authid}] : unauthorized access`
+      ownerLogger.error(
+        ` ownerLogout-> $OWNER_ID=[${owner_authid}] : unauthorized access`
       );
       throw new ApiError(401, "unauthorized access");
     }
