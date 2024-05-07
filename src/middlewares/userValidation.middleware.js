@@ -98,13 +98,13 @@ const updateUserValididation = () => {
 
 const postReviewValidation = () => {
   return [
-    body("bookingId")
+    body("booking_id")
       .notEmpty()
       .withMessage("Booking ID is required")
       .isNumeric()
       .withMessage("Booking ID must be a number"),
 
-    body("reviewMessage").notEmpty().withMessage("Review message is required"),
+    body("review").notEmpty().withMessage("Review message is required"),
 
     body("rating")
       .notEmpty()
