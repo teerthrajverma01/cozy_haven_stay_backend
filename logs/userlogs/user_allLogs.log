@@ -47,3 +47,9 @@
 2024-05-06T15:32:24.514Z [user-service] info: cancelBookingByBookingID -> $USER_ID=[2] : updated booking status 
 2024-05-06T15:38:09.149Z [user-service] error:  cancelBookingByBookingID-> $USER_ID=[2] : unauthorized access
 2024-05-06T15:52:09.656Z [user-service] error:  cancelBookingByBookingID-> $USER_ID=[undefined] : unauthorized access
+2024-05-07T03:18:46.578Z [user-service] error:  updateUserDetail-> $USER_ID=[undefined] : unauthorized access
+2024-05-07T03:19:42.471Z [user-service] info: getCurrentBooking -> $USER_ID=[undefined] : fetched current booking successfully
+2024-05-07T03:19:55.151Z [user-service] info: getPastBooking -> $USER_ID=[undefined] : fetched past booking successfully
+2024-05-07T03:21:11.392Z [user-service] error:  addReviewToHotel-> $USER_ID=[undefined] : unauthorized access
+2024-05-07T03:22:01.212Z [user-service] info: userLogin -> $user_EMAIL=[email1@gmail.com] : user logged In Successfully
+2024-05-07T03:22:09.397Z [user-service] info: addReviewToHotel -> $USER_ID=[1] : Added review to database

@@ -8,10 +8,25 @@ const hotelService = require("../../services/hotel/hotel.service");
 const bookingService = require("../../services/booking/booking.service");
 const RoomService = require("../../services/hotel/room.service");
 
+const { validationResult } = require("express-validator");
+
 // update owner_detail
 module.exports.updateOwnerDetail = AsyncHandler(async (req, res) => {
   try {
     // console.log("#########START############");
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const formattedErrors = [];
+      errors
+        .array()
+        .map((err) => formattedErrors.push({ [err.path]: err.msg }));
+
+      return res.status(422).json({
+        success: false,
+        errors: formattedErrors,
+      });
+    }
+
     let { owner_id: owner_authid } = req.auth;
     let data = req.body;
 
@@ -132,7 +147,7 @@ module.exports.getAllRoomDetailByHotelId = AsyncHandler(async (req, res) => {
     // console.log("#########START############");
     let { owner_id: owner_authid } = req.auth;
 
-    let { hotelid } = req.params;
+    let hotelid = parseInt(req.params.hotelid);
     let result = await RoomService.getAllRoomsByHotelId(hotelid);
     if (result == "FAILURE") {
       ownerLogger.error(
@@ -158,7 +173,7 @@ module.exports.getRoomDetailByRoomId = AsyncHandler(async (req, res) => {
   try {
     // console.log("#########START############");
     let { owner_id: owner_authid } = req.auth;
-    let { roomid } = req.params;
+    let roomid = parseInt(req.params.roomid);
     let result = await RoomService.getRoomById(roomid);
     if (result == "FAILURE") {
       ownerLogger.error(
@@ -210,7 +225,7 @@ module.exports.deleteRoomDetailByRoomId = AsyncHandler(async (req, res) => {
   try {
     // console.log("#########START############");
     let { owner_id: owner_authid } = req.auth;
-    let { roomid } = req.params;
+    let roomid = parseInt(req.params.roomid);
     let result = await RoomService.deleteExistingRoom(roomid);
     if (result === 0) {
       ownerLogger.error(
@@ -269,24 +284,17 @@ module.exports.updateRoomDetailByRoomId = AsyncHandler(async (req, res) => {
 module.exports.getPastBooking = AsyncHandler(async (req, res) => {
   try {
     // console.log("#########START############");
-    let { hotelid } = req.params;
+    let hotelid = parseInt(req.params.hotelid);
     let { owner_id: owner_authid } = req.auth;
 
-    let hotelData = await hotelService.getAllRoomDetailByHotelId(hotelid);
-    if (hotelData === "FAILURE") {
-      ownerLogger.error(
-        ` getPastBooking-> $OWNER_ID=[${owner_authid}] : couldno fetch hotel`
-      );
-      throw new ApiError(401, "couldnot fetch hotel");
-    }
+    // if (owner_authid !== data.owner_id) {
+    //   ownerLogger.error(
+    //     ` getPastBooking-> $OWNER_ID=[${owner_authid}] : unauthorized access`
+    //   );
+    //   throw new ApiError(401, "unauthorized access");
+    // }
 
-    if (owner_authid !== data.owner_id) {
-      ownerLogger.error(
-        ` getPastBooking-> $OWNER_ID=[${owner_authid}] : unauthorized access`
-      );
-      throw new ApiError(401, "unauthorized access");
-    }
-
+    console.log(hotelid);
     let pastBookings = await bookingService.getPastBookingByHotelID(hotelid);
     if (pastBookings === "FAILURE") {
       ownerLogger.error(
@@ -311,35 +319,29 @@ module.exports.getPastBooking = AsyncHandler(async (req, res) => {
 // get current booking by hotelid
 module.exports.getCurrentBooking = AsyncHandler(async (req, res) => {
   try {
-    // console.log("#########START############");
-    let { hotelid } = req.params;
+    console.log("#########START############");
+    let hotelid = parseInt(req.params.hotelid);
     let { owner_id: owner_authid } = req.auth;
 
-    let hotelData = await hotelService.getAllRoomDetailByHotelId(hotelid);
-    if (hotelData === "FAILURE") {
-      ownerLogger.error(
-        ` getCurrentBooking-> $OWNER_ID=[${owner_authid}] : couldno fetch hotel`
-      );
-      throw new ApiError(401, "couldnot fetch hotel");
-    }
+    // if (owner_authid !== data.owner_id) {
+    //   ownerLogger.error(
+    //     ` getCurrentBooking-> $OWNER_ID=[${owner_authid}] : unauthorized access`
+    //   );
+    //   throw new ApiError(401, "unauthorized access");
+    // }
 
-    if (owner_authid !== data.owner_id) {
-      ownerLogger.error(
-        ` getCurrentBooking-> $OWNER_ID=[${owner_authid}] : unauthorized access`
-      );
-      throw new ApiError(401, "unauthorized access");
-    }
-
-    let pastBookings = await bookingService.getCurrentBookingByHotelID(hotelid);
-    if (pastBookings === "FAILURE") {
+    let currentBookings = await bookingService.getCurrentBookingByHotelID(
+      hotelid
+    );
+    if (currentBookings === "FAILURE") {
       ownerLogger.error(
         `getCurrentBooking -> $OWNER_ID=[${owner_authid}] : Couldnot fetch current bookings `
       );
-      throw new ApiError(500, "Couldnot fetch past bookings");
+      throw new ApiError(500, "Couldnot fetch current bookings");
     }
 
     ownerLogger.info(
-      `getCurrentBooking -> $USER_ID=[${owner_authid}] : fetched past booking successfully`
+      `getCurrentBooking -> $USER_ID=[${owner_authid}] : fetched current booking successfully`
     );
     // console.log("#########END############");
     return res
@@ -347,7 +349,7 @@ module.exports.getCurrentBooking = AsyncHandler(async (req, res) => {
       .json(
         new ApiResponse(
           200,
-          pastBookings,
+          currentBookings,
           "fetched current booking successfully"
         )
       );

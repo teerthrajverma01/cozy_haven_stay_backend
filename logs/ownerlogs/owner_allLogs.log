@@ -63,3 +63,14 @@
 2024-05-06T15:50:10.545Z [owner-service] info: ownerLogin -> $OWNER_EMAIL=[owner2@gmail.com] : Owner logged In Successfully
 2024-05-06T16:17:59.500Z [owner-service] info: updateBookingStatus -> $OWNER_ID=[2] : updated booking status 
 2024-05-06T19:41:22.559Z [owner-service] info: getHotelDetailByOwnerId -> $OWNER_ID=[2] : fetched hotel detail successfully 
+2024-05-07T01:42:49.606Z [owner-service] info: ownerRegister -> $OWNER_EMAIL=[owner6@gmail.com] : new hotelowner registered
+2024-05-07T01:44:22.399Z [owner-service] info: ownerLogin -> $OWNER_EMAIL=[owner6@gmail.com] : Owner logged In Successfully
+2024-05-07T02:25:45.077Z [owner-service] info: addNewHotelDetail -> $OWNER_ID=[6] : new hotel added
+2024-05-07T02:26:20.877Z [owner-service] info: updateHotelDetail -> $OWNER_ID=[6] :  hotel+amenity updated
+2024-05-07T02:26:32.100Z [owner-service] info: getHotelDetailByOwnerId -> $OWNER_ID=[6] : fetched hotel detail successfully 
+2024-05-07T02:26:37.679Z [owner-service] info: getAllRoomDetailByHotelId -> $OWNER_ID=[6] : fetched all room by hotelownerid
+2024-05-07T02:43:18.440Z [owner-service] info: ownerLogin -> $OWNER_EMAIL=[owner1@gmail.com] : Owner logged In Successfully
+2024-05-07T02:56:32.786Z [owner-service] info: getCurrentBooking -> $USER_ID=[1] : fetched past booking successfully
+2024-05-07T02:57:10.405Z [owner-service] info: getCurrentBooking -> $USER_ID=[1] : fetched past booking successfully
+2024-05-07T02:57:38.856Z [owner-service] info: getCurrentBooking -> $USER_ID=[1] : fetched past booking successfully
+2024-05-07T03:18:23.867Z [owner-service] info: getPastBooking -> $USER_ID=[1] : fetched past booking successfully

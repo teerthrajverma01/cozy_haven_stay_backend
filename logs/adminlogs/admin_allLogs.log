@@ -14,3 +14,10 @@
 2024-05-06T13:42:20.341Z [admin_service] info: deleteUserById -> $ADMIN_ID=[undefined] : User Deleted Successfully
 2024-05-06T13:42:39.023Z [admin_service] info: deleteUserById -> $ADMIN_ID=[undefined] : User Deleted Successfully
 2024-05-06T13:42:46.954Z [admin_service] info: deleteUserById -> $ADMIN_ID=[undefined] : User Deleted Successfully
+2024-05-07T02:31:27.032Z [admin_service] info: adminLogout -> $ADMIN_ID=[1] : admin logged Out successfully
+2024-05-07T02:31:27.114Z [admin_service] info: getAllUser -> $ADMIN_ID=[1] : all users fetched successfully
+2024-05-07T02:31:27.145Z [admin_service] error: deleteUserById -> $ADMIN_ID=[1] : No user with given id found
+2024-05-07T02:31:27.168Z [admin_service] info: getAllOwner -> $ADMIN_ID=[1] : all owners fetched successfully
+2024-05-07T02:31:27.191Z [admin_service] error: deleteOwnerById -> $ADMIN_ID=[1] : No owner with given id found
+2024-05-07T02:31:27.210Z [admin_service] info: getAdminById -> $ADMIN_ID=[1] : admin detail fetched successfully
+2024-05-07T02:31:27.234Z [admin_service] error: getAdminById -> $ADMIN_ID=[1] : Couldnot fetch admin detail

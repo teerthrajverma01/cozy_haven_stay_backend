@@ -14,19 +14,32 @@ const {
 } = require("../controllers/user/userDashboard.controller.js");
 const { verifyJWT } = require("../middlewares/auth.middleware.js");
 
+const {
+  userRegistrationValidationRules,
+  loginValidation,
+  updateUserValididation,
+  postReviewValidation,
+  bookingValidation,
+  validate,
+} = require("../middlewares/userValidation.middleware.js");
+
 const router = Router();
 
 // ##########user##################
 // unsecured routes
-router.route("/register").post(userRegister);
-router.route("/login").post(userLogin);
+router
+  .route("/register")
+  .post(userRegistrationValidationRules(), validate, userRegister);
+router.route("/login").post(loginValidation(), validate, userLogin);
 //secured routes (jwt verification needed)
 router.route("/logout/:userid").post(verifyJWT, userLogout);
-router.route("/dashboard/update-user").post(verifyJWT, updateUserDetail);
+router
+  .route("/dashboard/update-user")
+  .post(verifyJWT, updateUserValididation(), validate, updateUserDetail);
 // ########booking#######
 router
   .route("/dashboard/booking/past-bookings/add-review")
-  .post(verifyJWT, addReviewToHotel);
+  .post(verifyJWT, postReviewValidation(), validate, addReviewToHotel);
 router
   .route("/dashboard/booking/past-bookings/get-by-user/:userid")
   .get(verifyJWT, getPastBooking);
@@ -36,6 +49,8 @@ router
 router
   .route("/dashboard/booking/current-booking/:userid")
   .get(verifyJWT, getCurrentBooking);
-router.route("/newbooking").post(verifyJWT, createNewBooking);
+router
+  .route("/newbooking")
+  .post(verifyJWT, bookingValidation(), validate, createNewBooking);
 
 module.exports = router;

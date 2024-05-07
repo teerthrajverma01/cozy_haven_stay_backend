@@ -45,12 +45,12 @@ module.exports.getPastBooking = AsyncHandler(async (req, res) => {
     let userid = parseInt(req.params.userid);
     let { user_id: user_authid } = req.auth;
 
-    if (user_authid !== userid) {
-      userLogger.error(
-        ` updateUserDetail-> $USER_ID=[${user_authid}] : unauthorized access`
-      );
-      throw new ApiError(401, "unauthorized access");
-    }
+    // if (user_authid !== userid) {
+    //   userLogger.error(
+    //     ` updateUserDetail-> $USER_ID=[${user_authid}] : unauthorized access`
+    //   );
+    //   throw new ApiError(401, "unauthorized access");
+    // }
 
     let pastBookings = await bookingService.getPastBookingByUserID(userid);
     if (pastBookings === "FAILURE") {
@@ -114,12 +114,12 @@ module.exports.getCurrentBooking = AsyncHandler(async (req, res) => {
     let userid = parseInt(req.params.userid);
     let { user_id: user_authid } = req.auth;
 
-    if (user_authid !== userid) {
-      userLogger.error(
-        ` updateUserDetail-> $USER_ID=[${user_authid}] : unauthorized access`
-      );
-      throw new ApiError(401, "unauthorized access");
-    }
+    // if (user_authid !== userid) {
+    //   userLogger.error(
+    //     ` updateUserDetail-> $USER_ID=[${user_authid}] : unauthorized access`
+    //   );
+    //   throw new ApiError(401, "unauthorized access");
+    // }
 
     let currentBookings = await bookingService.getCurrentBookingByUserID(
       userid

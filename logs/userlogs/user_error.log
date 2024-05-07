@@ -8,3 +8,5 @@
 2024-05-06T15:28:28.537Z [user-service] error:  createNewBooking-> $USER_ID=[2] : Booking successful
 2024-05-06T15:38:09.149Z [user-service] error:  cancelBookingByBookingID-> $USER_ID=[2] : unauthorized access
 2024-05-06T15:52:09.656Z [user-service] error:  cancelBookingByBookingID-> $USER_ID=[undefined] : unauthorized access
+2024-05-07T03:18:46.578Z [user-service] error:  updateUserDetail-> $USER_ID=[undefined] : unauthorized access
+2024-05-07T03:21:11.392Z [user-service] error:  addReviewToHotel-> $USER_ID=[undefined] : unauthorized access
