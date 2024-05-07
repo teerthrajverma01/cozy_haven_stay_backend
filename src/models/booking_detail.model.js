@@ -1,8 +1,7 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const db = require("../config/dbconfig");
 const models = require("./index");
-
-const BookingDetail = db.define(
+const BookingDetailModel = db.define(
   "booking_detail",
   {
     booking_id: {
@@ -58,17 +57,47 @@ const BookingDetail = db.define(
   }
 );
 
-// BookingDetail.belongsTo(HotelDetail, {
-//   foreignKey: "hotel_id",
-//   targetKey: "hotel_id",
-// });
+const ReviewDetailModel = db.define(
+  "review_detail",
+  {
+    review_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    booking_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "booking_detail",
+        key: "booking_id",
+      },
+    },
+    review: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    rating: {
+      type: DataTypes.FLOAT(2, 1),
+      allowNull: false,
+    },
+    time_stamp: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    freezeTableName: true,
+    tableName: "review_detail",
+    timestamps: false,
+  }
+);
 
-// BookingDetail.belongsTo(UserDetail, {
-//   foreignKey: "user_id",
-//   targetKey: "user_id",
-// });
-
-module.exports = BookingDetail;
+BookingDetailModel.hasOne(ReviewDetailModel, {
+  foreignKey: "booking_id",
+  sourceKey: "booking_id",
+});
+module.exports = { BookingDetailModel, ReviewDetailModel };
 
 // DROP TABLE IF EXISTS booking_detail;
 // CREATE TABLE IF NOT EXISTS booking_detail (

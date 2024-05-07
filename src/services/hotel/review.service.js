@@ -1,4 +1,4 @@
-const db = require("../../config/dbconfig");
+const { Sequelize } = require("sequelize");
 const models = require("../../models/index");
 
 // create review with booking id
@@ -26,6 +26,9 @@ module.exports.getAllReviewByHotelId = async (hotelId) => {
       include: [
         {
           model: models.bookingDetailModel,
+          on: {
+            booking_id: Sequelize.col("review_detail.booking_id"),
+          },
           where: { hotel_id: hotelId },
         },
       ],

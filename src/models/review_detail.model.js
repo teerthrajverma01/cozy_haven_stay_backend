@@ -1,6 +1,5 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const db = require("../config/dbconfig");
-const models = require("./index");
 
 const ReviewDetail = db.define(
   "review_detail",
@@ -14,8 +13,8 @@ const ReviewDetail = db.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "bookin_detail",
-        key: "owner_id",
+        model: "booking_detail",
+        key: "booking_id",
       },
     },
     review: {
