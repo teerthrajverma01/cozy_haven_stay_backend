@@ -23,6 +23,7 @@ module.exports.addNewReview = async (data) => {
 module.exports.getAllReviewByHotelId = async (hotelId) => {
   try {
     const result = await models.reviewDetailModel.findAll({
+      attributes: ["review_id", "review", "rating", "time_stamp"],
       include: [
         {
           model: models.bookingDetailModel,
@@ -30,9 +31,11 @@ module.exports.getAllReviewByHotelId = async (hotelId) => {
             booking_id: Sequelize.col("review_detail.booking_id"),
           },
           where: { hotel_id: hotelId },
+          attributes: [],
         },
       ],
     });
+    console.log(result);
     const dataValuesArray = result.map((instance) => instance.dataValues);
     return dataValuesArray;
   } catch (error) {

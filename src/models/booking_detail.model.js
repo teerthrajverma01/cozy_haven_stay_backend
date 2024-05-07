@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const db = require("../config/dbconfig");
 const models = require("./index");
-const BookingDetailModel = db.define(
+const BookingDetail = db.define(
   "booking_detail",
   {
     booking_id: {
@@ -57,47 +57,7 @@ const BookingDetailModel = db.define(
   }
 );
 
-const ReviewDetailModel = db.define(
-  "review_detail",
-  {
-    review_id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    booking_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "booking_detail",
-        key: "booking_id",
-      },
-    },
-    review: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    rating: {
-      type: DataTypes.FLOAT(2, 1),
-      allowNull: false,
-    },
-    time_stamp: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-  },
-  {
-    freezeTableName: true,
-    tableName: "review_detail",
-    timestamps: false,
-  }
-);
-
-BookingDetailModel.hasOne(ReviewDetailModel, {
-  foreignKey: "booking_id",
-  sourceKey: "booking_id",
-});
-module.exports = { BookingDetailModel, ReviewDetailModel };
+module.exports = BookingDetail;
 
 // DROP TABLE IF EXISTS booking_detail;
 // CREATE TABLE IF NOT EXISTS booking_detail (
